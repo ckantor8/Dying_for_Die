@@ -1,0 +1,23 @@
+.bigText {
+    -fx-font: 30px "Impact";
+}
+
+.playButton {
+    -fx-background-color: darkred;
+    -fx-text-fill: white;
+    -fx-font: 20px "Impact";
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+.quitButton {
+    -fx-background-color: darkmagenta;
+    -fx-text-fill: white;
+    -fx-font: 12px "Impact";
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+.mygridStyle Line {
+    -fx-stroke   : black;
+}

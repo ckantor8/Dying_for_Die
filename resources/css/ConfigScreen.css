@@ -1,0 +1,74 @@
+.statusText {
+    -fx-font: 20px "Century";
+    -fx-padding: 10;
+}
+
+.bronze {
+-fx-background-color: #c3c4c4,
+    linear-gradient(#b37700 50%, white 100%),
+    radial-gradient(center 50% -40%, radius 200%, #e69900 45%, rgba(230,230,230,0) 50%);
+-fx-background-radius: 30;
+-fx-background-insets: 0,1,1;
+-fx-text-fill: black;
+-fx-font-weight: bold;
+-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1);
+}
+
+.silver {
+    -fx-background-color: #c3c4c4,
+        linear-gradient(#666666 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #808080 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1);
+}
+
+.gold {
+    -fx-background-color: #c3c4c4,
+        linear-gradient(#ffd11a 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #ffdb4d 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1);
+}
+
+.plat {
+    -fx-background-color: #c3c4c4,
+        linear-gradient(#d6d6d6 50%, white 100%),
+        radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1);
+}
+
+.button:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 92, 182, .4), 5,0,0,1);
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+.button:selected {
+    -fx-effect: dropshadow(three-pass-box, rgba(145, 92, 182, .4), 5,0,0,1);
+    -fx-background-color: linear-gradient(#2A5058, #61a2b1);
+}
+
+.return {
+    -fx-background-color: darkred;
+    -fx-text-fill: white;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-family: 'Copperplate Gothic Light';
+}
+
+.advance {
+    -fx-background-color: darkgreen;
+    -fx-text-fill: white;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-font-family: 'Copperplate Gothic Light';
+}
