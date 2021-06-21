@@ -21,7 +21,6 @@ import view.Screen;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller extends Application {
     @FXML
@@ -35,7 +34,7 @@ public class Controller extends Application {
     private int numPlayers;
     private int startingGold;
     private ArrayList<PlayerModel> players = new ArrayList<>();
-    private PlayerModel currPlayer;
+    private PlayerModel currPlayer = new PlayerModel("null", Color.BLACK, 0);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -116,6 +115,8 @@ public class Controller extends Application {
             }
         });
 
+        returnButton.setOnAction(e -> goToInitialConfigScreen());
+
         Scene configScene = configScreen.setupScene();
         stage.setScene(configScene);
         stage.show();
@@ -165,6 +166,7 @@ public class Controller extends Application {
     }
 
     public void takeTurn(PlayerModel player) {
+        currPlayer = player;
         moveOne.setOnAction(e -> moveOneSquare(player));
         moveThree.setOnAction(e -> move3Squares(player));
     }
