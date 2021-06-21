@@ -1,13 +1,10 @@
 import controller.Controller;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.base.WindowMatchers;
-import org.testfx.service.query.EmptyNodeQueryException;
 
 import java.util.NoSuchElementException;
 
