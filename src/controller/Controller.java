@@ -3,7 +3,9 @@ package controller;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
@@ -147,11 +149,27 @@ public class Controller extends Application {
         // Set the Title to the Stage
         stage.setTitle(title);
 
+        int x = 0;
         for (PlayerModel player : players) {
-            Circle sprite = new Circle(5);
+            Circle sprite = new Circle(10);
             sprite.setFill(player.getCharacter());
             player.setSprite(sprite);
             grid.add(sprite, 0, 1);
+            if (x == 0) {
+                GridPane.setHalignment(sprite, HPos.LEFT);
+                GridPane.setValignment(sprite, VPos.TOP);
+            } else if (x == 1) {
+                GridPane.setHalignment(sprite, HPos.LEFT);
+                GridPane.setValignment(sprite, VPos.BOTTOM);
+            } else if (x == 2) {
+                GridPane.setHalignment(sprite, HPos.RIGHT);
+                GridPane.setValignment(sprite, VPos.TOP);
+            } else {
+                GridPane.setHalignment(sprite, HPos.RIGHT);
+                GridPane.setValignment(sprite, VPos.BOTTOM);
+            }
+            GridPane.setMargin(sprite, new Insets(3, 3, 3, 3));
+            x++;
         }
 
         grid.add(moveOne, 1, 6, 2, 1);
