@@ -23,6 +23,7 @@ import view.Screen;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Controller extends Application {
     @FXML
@@ -178,6 +179,7 @@ public class Controller extends Application {
         // Display the Stage
         stage.show();
 
+        Collections.shuffle(players);
         for (PlayerModel player : players) {
             takeTurn(player);
         }
