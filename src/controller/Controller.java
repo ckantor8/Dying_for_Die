@@ -151,6 +151,7 @@ public class Controller extends Application {
         stage.setTitle(title);
 
         int x = 0;
+        Collections.shuffle(players);
         for (PlayerModel player : players) {
             Circle sprite = new Circle(10);
             sprite.setFill(player.getCharacter());
@@ -179,7 +180,6 @@ public class Controller extends Application {
         // Display the Stage
         stage.show();
 
-        Collections.shuffle(players);
         for (PlayerModel player : players) {
             takeTurn(player);
         }
