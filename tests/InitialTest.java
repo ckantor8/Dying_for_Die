@@ -117,14 +117,28 @@ public class InitialTest extends ApplicationTest {
         assertEquals(1, 1);
     }
 
-    @Test //Test that empty name is not allowed in player config
+    @Test //Test that empty name is not allowed in player config // Alistair Sequeira
     public void testEmptyPlayer() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Bob's Game");
+        clickOn("#$4");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#red");
+        clickOn("Advance");
+        verifyThat("Type Your Name", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that no color choice is not allowed
+    @Test //Test that no color choice is not allowed // Alistair Sequeira
     public void testNoCharacter() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Bob's Game");
+        clickOn("#$4");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#name").write("Bob");
+        clickOn("Advance");
+        verifyThat("Choose a Character", NodeMatchers.isNotNull());
     }
 
     @Test //Test that the main game screen is displayed after player config
