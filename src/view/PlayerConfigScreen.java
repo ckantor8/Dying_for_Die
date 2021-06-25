@@ -54,12 +54,12 @@ public class PlayerConfigScreen {
         BorderPane configPane = new BorderPane();
         Scene configScene = new Scene(configPane, width, height);
         options = new VBox();
-        options.setPadding(new Insets(100, 0, 0, 0));
+        options.setPadding(new Insets(65, 0, 0, 0));
         options.setSpacing(20);
         options.setAlignment(Pos.CENTER);
         configPane.setCenter(options);
 
-        Image image0 = new Image("file:resources/images/backgrounds/config_screen.png");
+        Image image0 = new Image("file:resources/images/backgrounds/player_screen.png");
         BackgroundSize backgroundSize0 = new BackgroundSize(
             BackgroundSize.AUTO, BackgroundSize.AUTO,
             true, true, true, true);
@@ -75,29 +75,31 @@ public class PlayerConfigScreen {
 
     public Scene getScene(BorderPane configPane, Scene configScene) {
 
+        // old text background color = ORANGERED, text color = DARKSLATEGRAY
+
         name = new TextField();
         name.setId("name");
         name.setPrefWidth(215);
         name.setMaxWidth(215);
         Text instr1 = new Text("Type Your Name");
-        instr1.setFill(Color.DARKSLATEGRAY);
+        instr1.setFill(Color.LIGHTGREEN);
         instr1.setFont(new Font("Copperplate Gothic Bold", 20));
         instr1.setTextAlignment(TextAlignment.CENTER);
         StackPane instruction1 = new StackPane();
 
         instruction1.setBackground(new Background(new
-            BackgroundFill(Color.ORANGERED, CornerRadii.EMPTY,
+            BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY,
             new Insets(0, 140, 0, 140))));
         instruction1.getChildren().add(instr1);
         options.getChildren().add(instruction1);
         options.getChildren().add(name);
 
         Text instr3 = new Text("Choose a Character");
-        instr3.setFill(Color.DARKSLATEGRAY);
+        instr3.setFill(Color.LIGHTGREEN);
         instr3.setFont(new Font("Copperplate Gothic Bold", 18));
         StackPane instruction3 = new StackPane();
         instruction3.setBackground(new Background(new
-            BackgroundFill(Color.ORANGERED, CornerRadii.EMPTY,
+            BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY,
             new Insets(0, 140, 0, 140))));
         instruction3.getChildren().add(instr3);
         options.getChildren().add(instruction3);
