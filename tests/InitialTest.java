@@ -16,10 +16,11 @@ public class InitialTest extends ApplicationTest {
     public <T extends Node> T find(final String query) {
         return lookup(query).query();
     }
+    public Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Controller controller = new Controller();
+        controller = new Controller();
         controller.start(primaryStage);
     }
 
@@ -141,14 +142,36 @@ public class InitialTest extends ApplicationTest {
         verifyThat("Choose a Character", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that the main game screen is displayed after player config
+    @Test //Test that the main game screen is displayed after player config // TJ Crawford
     public void testMainGame() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Bob's Game");
+        clickOn("#$4");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#name").write("Bob");
+        clickOn("#red");
+        clickOn("Advance");
+        clickOn("#name").write("Ann");
+        clickOn("#yellow");
+        clickOn("Advance");
+        verifyThat("It's your turn!", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that correct number of players are added
+    @Test //Test that correct number of players are added // TJ Crawford
     public void testNumPlayers() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Bob's Game");
+        clickOn("#$4");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#name").write("Bob");
+        clickOn("#red");
+        clickOn("Advance");
+        clickOn("#name").write("Ann");
+        clickOn("#yellow");
+        clickOn("Advance");
+        assertEquals(2, controller.getPlayers());
     }
 
 }
