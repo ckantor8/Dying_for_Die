@@ -8,7 +8,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -43,6 +45,7 @@ public class Controller extends Application {
     private Label p1;
     private Label currGold;
     private Label currentTurn;
+    private Button quitButton;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -160,15 +163,26 @@ public class Controller extends Application {
         playerInfo.setMinWidth(150);
         playerInfo.getChildren().addAll(p1, currGold, message);
 
-        //Display current turn
+        //Display current turn and quit button
         turn = 1;
         VBox currTurn = new VBox();
         currentTurn = new Label("Turn: " + (turn / players.size()) );
-        currTurn.getChildren().add(currentTurn);
         currTurn.setAlignment(Pos.CENTER_RIGHT);
         currTurn.setMinWidth(150);
         currTurn.setMinHeight(100);
-
+        quitButton = new Button("Quit");
+        quitButton.setId("quitButton");
+        quitButton.setOnAction(e -> {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setContentText("Are you sure you want to quit the game?");
+            confirmation.setHeaderText("Quit");
+            confirmation.setTitle("Quit");
+            confirmation.showAndWait();
+            if (confirmation.getResult() == ButtonType.OK) {
+                initWelcomeScreen();
+            }
+        });
+        currTurn.getChildren().addAll(currentTurn, quitButton);
         toolbar.getChildren().addAll(playerInfo,currTurn);
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
