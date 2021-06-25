@@ -130,7 +130,8 @@ public class Controller extends Application {
         // Create the FXMLLoader
         FXMLLoader loader = new FXMLLoader();
         // Path to the FXML File
-        String fxmlDocPath = System.getProperty("user.dir") + "\\Board.fxml";
+        String fxmlDocPath = "C:\\Users\\royal\\One"
+            + "Drive\\Desktop\\CS3300\\CS3300-SU21\\Board.fxml";
         FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
 
         //loader.setController(this);
