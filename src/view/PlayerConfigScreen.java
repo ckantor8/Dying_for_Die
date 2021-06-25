@@ -33,7 +33,7 @@ public class PlayerConfigScreen {
     private Button returnButton;
     private VBox options;
     private TextField name;
-    private Color chtr;
+    private Color chtr = Color.BLACK;
     private String input;
     private ToggleButton red;
     private ToggleButton blue;
@@ -180,7 +180,7 @@ public class PlayerConfigScreen {
                 invalidW.show();
             }
 
-            if (!chtr.equals("0")) {
+            if (chtr != Color.BLACK) {
                 return 1;
             }
 
