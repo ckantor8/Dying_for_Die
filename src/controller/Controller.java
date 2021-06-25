@@ -5,13 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -38,6 +37,12 @@ public class Controller extends Application {
     private int startingGold;
     private ArrayList<PlayerModel> players = new ArrayList<>();
     private PlayerModel currPlayer = new PlayerModel("null", Color.BLACK, 0);
+    private HBox toolbar;
+    private int turn;
+    private VBox vbox;
+    private Label p1;
+    private Label currGold;
+    private Label currentTurn;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -130,28 +135,56 @@ public class Controller extends Application {
         // Create the FXMLLoader
         FXMLLoader loader = new FXMLLoader();
         // Path to the FXML File
-        String fxmlDocPath = "C:\\Users\\royal\\One"
-            + "Drive\\Desktop\\CS3300\\CS3300-SU21\\Board.fxml";
+        String fxmlDocPath = "Board.fxml";
         FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
 
         //loader.setController(this);
 
+        //Vbox for organizing toolbar and board
+        vbox = new VBox();
+        toolbar = new HBox(150);
+        vbox.getChildren().add(toolbar);
+
+        //toolbar configurations
+        toolbar.setBackground(new Background(new BackgroundFill(players.get(0).getCharacter(),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        toolbar.setMinHeight(100);
+        toolbar.setAlignment(Pos.CENTER);
+        //Display current player's info
+        VBox playerInfo = new VBox();
+        p1 = new Label("Player: " + players.get(0).getName());
+        currGold = new Label("Gold: " + players.get(0).getGold());
+        Label message = new Label("It's your turn!");
+        playerInfo.setAlignment(Pos.CENTER_LEFT);
+        playerInfo.setMinHeight(100);
+        playerInfo.setMinWidth(150);
+        playerInfo.getChildren().addAll(p1, currGold, message);
+
+        //Display current turn
+        turn = 1;
+        VBox currTurn = new VBox();
+        currentTurn = new Label("Turn: " + (turn / players.size()) );
+        currTurn.getChildren().add(currentTurn);
+        currTurn.setAlignment(Pos.CENTER_RIGHT);
+        currTurn.setMinWidth(150);
+        currTurn.setMinHeight(100);
+
+        toolbar.getChildren().addAll(playerInfo,currTurn);
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
         grid.setBackground(new Background(new BackgroundFill(Color.BLACK,
             new CornerRadii(0), new Insets(0))));
         grid.getStyleClass().add("mygridStyle");
-
+        vbox.getChildren().add(grid);
         // Create the Scene
-        Scene scene = new Scene(grid);
+        Scene scene = new Scene(vbox);
         // Set the Scene to the Stage
         stage.setScene(scene);
         // Set the Title to the Stage
         stage.setTitle(title);
 
         int x = 0;
-        Collections.shuffle(players);
         for (PlayerModel player : players) {
             Circle sprite = new Circle(10);
             sprite.setFill(player.getCharacter());
@@ -174,12 +207,14 @@ public class Controller extends Application {
             x++;
         }
 
+
         grid.add(moveOne, 1, 6, 2, 1);
         grid.add(moveThree, 5, 6, 2, 1);
 
         // Display the Stage
         stage.show();
 
+        Collections.shuffle(players);
         for (PlayerModel player : players) {
             takeTurn(player);
         }
@@ -187,6 +222,7 @@ public class Controller extends Application {
 
     public void takeTurn(PlayerModel player) {
         currPlayer = player;
+        updateToolbar();
         moveOne.setOnAction(e -> moveOneSquare(player));
         moveThree.setOnAction(e -> move3Squares(player));
     }
@@ -217,6 +253,15 @@ public class Controller extends Application {
         for (int i = 1; i <= 3; i++) {
             moveOneSquare(player);
         }
+    }
+
+    private void updateToolbar() {
+        turn++;
+        p1.setText("Player: " + currPlayer.getName());
+        currGold.setText("Gold: " + currPlayer.getGold());
+        currentTurn.setText("Turn: " + (turn / players.size()) );
+        toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
+                CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     private void youWin() {
