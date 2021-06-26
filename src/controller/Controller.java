@@ -12,9 +12,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.PlayerModel;
 import view.InitialConfigScreen;
@@ -25,12 +27,14 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Controller extends Application {
     @FXML
     private GridPane grid;
     private Button moveOne = new Button("Move 1");
     private Button moveThree = new Button("Move 3");
+    private Integer[][] bonusSquares = new Integer[7][7];
     private Stage stage;
     private final int width = 500;
     private final int height = 500;
@@ -58,7 +62,7 @@ public class Controller extends Application {
         stage.setTitle("Your New Favorite Dungeon Crawler");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
-            + "images/backgrounds/welcome_screen.png");
+                + "images/backgrounds/welcome_screen.png");
         String playText = new String("Click Here to Begin");
         String stats = null;
         Screen welcomeScreen = new Screen(width, height, bigText, bg, playText);
@@ -109,8 +113,8 @@ public class Controller extends Application {
         advanceButton.setOnAction(e -> {
             if (configScreen.checkSelections() > 0) {
                 PlayerModel player =
-                    new PlayerModel(configScreen.getInput(),
-                        configScreen.getChtr(), startingGold);
+                        new PlayerModel(configScreen.getInput(),
+                                configScreen.getChtr(), startingGold);
                 players.add(player);
                 if (players.size() == numPlayers) {
                     try {
@@ -163,24 +167,15 @@ public class Controller extends Application {
         playerInfo.setMinWidth(150);
         playerInfo.getChildren().addAll(p1, currGold, message);
 
-        //Display current turn
-        turn = 1;
-        VBox currTurn = new VBox();
-        currentTurn = new Label("Turn: " + (turn / players.size()) );
-        currTurn.getChildren().add(currentTurn);
-        currTurn.setAlignment(Pos.CENTER_RIGHT);
-        currTurn.setMinWidth(150);
-        currTurn.setMinHeight(100);
-
         //Display current turn and quit button
         turn = 1;
-        currTurn = new VBox();
+        VBox currTurn = new VBox();
         currentTurn = new Label("Turn: " + (turn / players.size()) );
         currTurn.setAlignment(Pos.CENTER_RIGHT);
         currTurn.setMinWidth(150);
         currTurn.setMinHeight(100);
         quitButton = new Button("Quit");
-        quitButton.setId("quitButton2");
+        quitButton.setId("quitButton");
         quitButton.setOnAction(e -> {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
             confirmation.setContentText("Are you sure you want to quit the game?");
@@ -196,8 +191,37 @@ public class Controller extends Application {
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
-        grid.setBackground(new Background(new BackgroundFill(Color.BLACK,
-            new CornerRadii(0), new Insets(0))));
+        Image image0 = new Image("file:resources/images/backgrounds/SquareImage.jpg");
+        BackgroundSize backgroundSize0 = new BackgroundSize(
+                BackgroundSize.AUTO, BackgroundSize.AUTO,
+                true, true, true, true);
+        BackgroundImage backgroundImage0 = new BackgroundImage(image0,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                backgroundSize0);
+        Background background1 = new Background(backgroundImage0);
+        int i = 0;
+        while (i != 5) {
+            Random rand = new Random();
+            int red = rand.nextInt(255);
+            int green = rand.nextInt(255);
+            int blue = rand.nextInt(255);
+            Rectangle rec = new Rectangle();
+            rec.setWidth(75);
+            rec.setHeight(57);
+            rec.setArcWidth(5);
+            rec.setArcHeight(5);
+            rec.setFill(Color.rgb(red, green, blue, .99));
+            int[] intArray = {1, 3, 5};
+            int column = rand.nextInt(7);
+            int row = intArray[rand.nextInt(3)];
+            if (bonusSquares[column][row] == null) {
+                grid.add(rec, rand.nextInt(7), intArray[rand.nextInt(3)]);
+                bonusSquares[column][row] = 1;
+                i++;
+            }
+        }
+        grid.setBackground(background1);
         grid.getStyleClass().add("mygridStyle");
         vbox.getChildren().add(grid);
         // Create the Scene
@@ -205,7 +229,7 @@ public class Controller extends Application {
         // Set the Scene to the Stage
         stage.setScene(scene);
         // Set the Title to the Stage
-        stage.setTitle(title);
+        stage.setTitle("Game Board");
 
         int x = 0;
         for (PlayerModel player : players) {
@@ -290,9 +314,9 @@ public class Controller extends Application {
     private void youWin() {
         stage.setTitle("You Win!");
         String bigText = new String("Congratulations on winning \n "
-            + "Dying for Die, " + currPlayer.getName() + "!");
+                + "Dying for Die, " + currPlayer.getName() + "!");
         String bg = new String("file:resources/"
-            + "images/backgrounds/win_screen.jpg");
+                + "images/backgrounds/win_screen.jpg");
         String playText = new String("Click Here to Play Again");
         Screen winScreen = new Screen(width, height, bigText, bg, playText);
 
@@ -307,10 +331,12 @@ public class Controller extends Application {
         stage.setScene(winScene);
         stage.show();
     }
+    public int getPlayers() {
+        return numPlayers;
+    }
 
     public Label getP1() { return p1;}
 
     public Label getCurrGold() { return currGold; }
-    
 
 }
