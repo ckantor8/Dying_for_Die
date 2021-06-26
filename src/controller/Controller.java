@@ -62,7 +62,7 @@ public class Controller extends Application {
         stage.setTitle("Your New Favorite Dungeon Crawler");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
-            + "images/backgrounds/welcome_screen.png");
+                + "images/backgrounds/welcome_screen.png");
         String playText = new String("Click Here to Begin");
         String stats = null;
         Screen welcomeScreen = new Screen(width, height, bigText, bg, playText);
@@ -113,8 +113,8 @@ public class Controller extends Application {
         advanceButton.setOnAction(e -> {
             if (configScreen.checkSelections() > 0) {
                 PlayerModel player =
-                    new PlayerModel(configScreen.getInput(),
-                        configScreen.getChtr(), startingGold);
+                        new PlayerModel(configScreen.getInput(),
+                                configScreen.getChtr(), startingGold);
                 players.add(player);
                 if (players.size() == numPlayers) {
                     try {
@@ -314,9 +314,9 @@ public class Controller extends Application {
     private void youWin() {
         stage.setTitle("You Win!");
         String bigText = new String("Congratulations on winning \n "
-            + "Dying for Die, " + currPlayer.getName() + "!");
+                + "Dying for Die, " + currPlayer.getName() + "!");
         String bg = new String("file:resources/"
-            + "images/backgrounds/win_screen.jpg");
+                + "images/backgrounds/win_screen.jpg");
         String playText = new String("Click Here to Play Again");
         Screen winScreen = new Screen(width, height, bigText, bg, playText);
 
@@ -334,5 +334,9 @@ public class Controller extends Application {
     public int getPlayers() {
         return numPlayers;
     }
+
+    public Label getP1() { return p1;}
+
+    public Label getCurrGold() { return currGold; }
 
 }

@@ -1,5 +1,6 @@
 import controller.Controller;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
@@ -82,7 +83,7 @@ public class InitialTest extends ApplicationTest {
         clickOn("#quitButton1");
         try {
             verifyThat(window("Your New Favorite Dungeon Crawler"),
-                WindowMatchers.isNotShowing());
+                    WindowMatchers.isNotShowing());
             assertEquals(1, 0);
         } catch (NoSuchElementException e) {
             assertEquals(1, 1);
@@ -92,20 +93,44 @@ public class InitialTest extends ApplicationTest {
     @Test //Aayush Dixit
     public void testLabels() {
         clickOn("Click Here to Begin");
-        clickOn("#name").write("Bob");
-        clickOn("#$4");
+        clickOn("#name").write("Game");
+        clickOn("#$2");
         clickOn("#2");
         clickOn("Begin Game");
-        //Label label = find("#user");
-        //assertEquals("Name: Bob", label.getText());
-        //label = find("#currMoney");
-        //assertEquals("Total: $4", label.getText());
-        assertEquals(1, 1);
+        clickOn("#name").write("Bob");
+        clickOn("#red");
+        clickOn("Advance");
+        clickOn("#name").write("Bub");
+        clickOn("#yellow");
+        clickOn("Advance");
+        Label testPlayer = controller.getP1();
+        assertEquals(testPlayer.getText(),"Player: Bob");
+        Label testGold = controller.getCurrGold();
+        assertEquals(testGold.getText(), "Gold: 2");
     }
 
     @Test //Aayush Dixit
     public void testQuitButton2() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Game");
+        clickOn("#$2");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#name").write("Bob");
+        clickOn("#red");
+        clickOn("Advance");
+        clickOn("#name").write("Bub");
+        clickOn("#yellow");
+        clickOn("Advance");
+        find("#quitButton2");
+        clickOn("#quitButton2");
+        try {
+            verifyThat(window("Your New Favorite Dungeon Crawler"),
+                    WindowMatchers.isNotShowing());
+            assertEquals(1, 0);
+        } catch (NoSuchElementException e) {
+            assertEquals(1, 1);
+        }
     }
 
     @Test //Test that Back button on Player Config returns to Initial Config
