@@ -196,7 +196,7 @@ public class InitialTest extends ApplicationTest {
         clickOn("#name").write("Ann");
         clickOn("#yellow");
         clickOn("Advance");
-        //assertEquals(2, controller.getPlayers());
+        assertEquals(2, controller.getPlayers());
     }
 
 }
