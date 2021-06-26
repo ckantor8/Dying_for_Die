@@ -1,5 +1,6 @@
 import controller.Controller;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.junit.Test;
@@ -122,14 +123,15 @@ public class InitialTest extends ApplicationTest {
         clickOn("#name").write("Bub");
         clickOn("#yellow");
         clickOn("Advance");
-        find("#quitButton2");
-        clickOn("#quitButton2");
+        Button button  = find("#quitButton2");
+        clickOn(button);
+        clickOn("OK");
         try {
             verifyThat(window("Your New Favorite Dungeon Crawler"),
-                    WindowMatchers.isNotShowing());
-            assertEquals(1, 0);
-        } catch (NoSuchElementException e) {
+                    WindowMatchers.isShowing());
             assertEquals(1, 1);
+        } catch (NoSuchElementException e) {
+            assertEquals(1, 0);
         }
     }
 
