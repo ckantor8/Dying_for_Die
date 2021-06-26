@@ -175,7 +175,7 @@ public class Controller extends Application {
         currTurn.setMinWidth(150);
         currTurn.setMinHeight(100);
         quitButton = new Button("Quit");
-        quitButton.setId("quitButton");
+        quitButton.setId("quitButton2");
         quitButton.setOnAction(e -> {
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
             confirmation.setContentText("Are you sure you want to quit the game?");
