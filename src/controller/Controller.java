@@ -191,7 +191,7 @@ public class Controller extends Application {
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
-        Image image0 = new Image("file:resources/images/backgrounds/SquareImage.jpg");
+        /*Image image0 = new Image("file:resources/images/backgrounds/SquareImage.jpg");
         BackgroundSize backgroundSize0 = new BackgroundSize(
             BackgroundSize.AUTO, BackgroundSize.AUTO,
             true, true, true, true);
@@ -221,7 +221,10 @@ public class Controller extends Application {
                 i++;
             }
         }
-        grid.setBackground(background1);
+        grid.setBackground(background1);*/
+
+        grid.setBackground(new Background(new BackgroundFill(Color.BLACK,
+            new CornerRadii(0), new Insets(0))));
         grid.getStyleClass().add("mygridStyle");
         vbox.getChildren().add(grid);
         // Create the Scene
