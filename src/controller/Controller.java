@@ -62,7 +62,7 @@ public class Controller extends Application {
         stage.setTitle("Your New Favorite Dungeon Crawler");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
-                + "images/backgrounds/welcome_screen.png");
+            + "images/backgrounds/welcome_screen.png");
         String playText = new String("Click Here to Begin");
         String stats = null;
         Screen welcomeScreen = new Screen(width, height, bigText, bg, playText);
@@ -113,8 +113,8 @@ public class Controller extends Application {
         advanceButton.setOnAction(e -> {
             if (configScreen.checkSelections() > 0) {
                 PlayerModel player =
-                        new PlayerModel(configScreen.getInput(),
-                                configScreen.getChtr(), startingGold);
+                    new PlayerModel(configScreen.getInput(),
+                        configScreen.getChtr(), startingGold);
                 players.add(player);
                 if (players.size() == numPlayers) {
                     try {
@@ -154,7 +154,7 @@ public class Controller extends Application {
 
         //toolbar configurations
         toolbar.setBackground(new Background(new BackgroundFill(players.get(0).getCharacter(),
-                CornerRadii.EMPTY, Insets.EMPTY)));
+            CornerRadii.EMPTY, Insets.EMPTY)));
         toolbar.setMinHeight(100);
         toolbar.setAlignment(Pos.CENTER);
         //Display current player's info
@@ -170,7 +170,7 @@ public class Controller extends Application {
         //Display current turn and quit button
         turn = 1;
         VBox currTurn = new VBox();
-        currentTurn = new Label("Turn: " + (turn / players.size()) );
+        currentTurn = new Label("Turn: " + (turn / players.size()));
         currTurn.setAlignment(Pos.CENTER_RIGHT);
         currTurn.setMinWidth(150);
         currTurn.setMinHeight(100);
@@ -187,18 +187,18 @@ public class Controller extends Application {
             }
         });
         currTurn.getChildren().addAll(currentTurn, quitButton);
-        toolbar.getChildren().addAll(playerInfo,currTurn);
+        toolbar.getChildren().addAll(playerInfo, currTurn);
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
         Image image0 = new Image("file:resources/images/backgrounds/SquareImage.jpg");
         BackgroundSize backgroundSize0 = new BackgroundSize(
-                BackgroundSize.AUTO, BackgroundSize.AUTO,
-                true, true, true, true);
+            BackgroundSize.AUTO, BackgroundSize.AUTO,
+            true, true, true, true);
         BackgroundImage backgroundImage0 = new BackgroundImage(image0,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                backgroundSize0);
+            BackgroundRepeat.NO_REPEAT,
+            BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+            backgroundSize0);
         Background background1 = new Background(backgroundImage0);
         int i = 0;
         while (i != 5) {
@@ -306,17 +306,17 @@ public class Controller extends Application {
         turn++;
         p1.setText("Player: " + currPlayer.getName());
         currGold.setText("Gold: " + currPlayer.getGold());
-        currentTurn.setText("Turn: " + (turn / players.size()) );
+        currentTurn.setText("Turn: " + (turn / players.size()));
         toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
-                CornerRadii.EMPTY, Insets.EMPTY)));
+            CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
     private void youWin() {
         stage.setTitle("You Win!");
         String bigText = new String("Congratulations on winning \n "
-                + "Dying for Die, " + currPlayer.getName() + "!");
+            + "Dying for Die, " + currPlayer.getName() + "!");
         String bg = new String("file:resources/"
-                + "images/backgrounds/win_screen.jpg");
+            + "images/backgrounds/win_screen.jpg");
         String playText = new String("Click Here to Play Again");
         Screen winScreen = new Screen(width, height, bigText, bg, playText);
 
@@ -331,12 +331,17 @@ public class Controller extends Application {
         stage.setScene(winScene);
         stage.show();
     }
+
     public int getPlayers() {
         return numPlayers;
     }
 
-    public Label getP1() { return p1;}
+    public Label getP1() {
+        return p1;
+    }
 
-    public Label getCurrGold() { return currGold; }
+    public Label getCurrGold() {
+        return currGold;
+    }
 
 }

@@ -18,7 +18,8 @@ public class InitialTest extends ApplicationTest {
     public <T extends Node> T find(final String query) {
         return lookup(query).query();
     }
-    public Controller controller;
+
+    private Controller controller;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -84,7 +85,7 @@ public class InitialTest extends ApplicationTest {
         clickOn("#quitButton1");
         try {
             verifyThat(window("Your New Favorite Dungeon Crawler"),
-                    WindowMatchers.isNotShowing());
+                WindowMatchers.isNotShowing());
             assertEquals(1, 0);
         } catch (NoSuchElementException e) {
             assertEquals(1, 1);
@@ -105,7 +106,7 @@ public class InitialTest extends ApplicationTest {
         clickOn("#yellow");
         clickOn("Advance");
         Label testPlayer = controller.getP1();
-        assertEquals(testPlayer.getText(),"Player: Bob");
+        assertEquals(testPlayer.getText(), "Player: Bob");
         Label testGold = controller.getCurrGold();
         assertEquals(testGold.getText(), "Gold: 2");
     }
@@ -123,19 +124,20 @@ public class InitialTest extends ApplicationTest {
         clickOn("#name").write("Bub");
         clickOn("#yellow");
         clickOn("Advance");
-        Button button  = find("#quitButton2");
+        Button button = find("#quitButton2");
         clickOn(button);
         clickOn("OK");
         try {
             verifyThat(window("Your New Favorite Dungeon Crawler"),
-                    WindowMatchers.isShowing());
+                WindowMatchers.isShowing());
             assertEquals(1, 1);
         } catch (NoSuchElementException e) {
             assertEquals(1, 0);
         }
     }
 
-    @Test //Test that Back button on Player Config returns to Initial Config // Dezarae
+    @Test
+    //Test that Back button on Player Config returns to Initial Config // Dezarae
     public void testBackButton2() {
         clickOn("Click Here to Begin");
         clickOn("#name").write("Bob's Game");
@@ -161,7 +163,8 @@ public class InitialTest extends ApplicationTest {
         verifyThat("Type Your Name", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that empty name is not allowed in player config // Alistair Sequeira
+    @Test
+    //Test that empty name is not allowed in player config // Alistair Sequeira
     public void testEmptyPlayer() {
         clickOn("Click Here to Begin");
         clickOn("#name").write("Bob's Game");
@@ -186,7 +189,8 @@ public class InitialTest extends ApplicationTest {
         verifyThat("Choose a Character", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that the main game screen is displayed after player config // TJ Crawford
+    @Test
+    //Test that the main game screen is displayed after player config // TJ Crawford
     public void testMainGame() {
         clickOn("Click Here to Begin");
         clickOn("#name").write("Bob's Game");
