@@ -101,7 +101,7 @@ public class InitialTest extends ApplicationTest {
         clickOn("#name").write("Bob");
         clickOn("#red");
         clickOn("Advance");
-        clickOn("#name").write("Bub");
+        clickOn("#name").write("Bob");
         clickOn("#yellow");
         clickOn("Advance");
         Label testPlayer = controller.getP1();
@@ -135,14 +135,30 @@ public class InitialTest extends ApplicationTest {
         }
     }
 
-    @Test //Test that Back button on Player Config returns to Initial Config
+    @Test //Test that Back button on Player Config returns to Initial Config // Dezarae
     public void testBackButton2() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Bob's Game");
+        clickOn("#$4");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#name").write("Bob");
+        clickOn("#red");
+        clickOn("Back");
+        verifyThat("Number of Players", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that all whitespace is not allowed as player name
+    @Test //Test that all whitespace is not allowed as player name // Dezarae
     public void testWhitespacePlayer() {
-        assertEquals(1, 1);
+        clickOn("Click Here to Begin");
+        clickOn("#name").write("Bob's Game");
+        clickOn("#$4");
+        clickOn("#2");
+        clickOn("Begin Game");
+        clickOn("#name").write("                    ");
+        clickOn("#red");
+        clickOn("Advance");
+        verifyThat("Type Your Name", NodeMatchers.isNotNull());
     }
 
     @Test //Test that empty name is not allowed in player config // Alistair Sequeira
@@ -152,6 +168,7 @@ public class InitialTest extends ApplicationTest {
         clickOn("#$4");
         clickOn("#2");
         clickOn("Begin Game");
+        clickOn("#name").write("");
         clickOn("#red");
         clickOn("Advance");
         verifyThat("Type Your Name", NodeMatchers.isNotNull());

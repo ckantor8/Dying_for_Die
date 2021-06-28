@@ -25,8 +25,12 @@ hs_err_pid*
 # JavaFX SDK
 javafx-sdk-ll.0.2/
 
-#IDE files
+# IDE files
 .DS_Store
 out/
 .idea/
 *.iml
+
+# CheckStyle
+*.xml
+*.py
