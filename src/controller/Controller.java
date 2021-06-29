@@ -32,8 +32,7 @@ import java.util.Random;
 public class Controller extends Application {
     @FXML
     private GridPane grid;
-    private Button moveOne = new Button("Move 1");
-    private Button moveThree = new Button("Move 3");
+    private Button rollDice = new Button("Roll the Dice!");
     private Integer[][] bonusSquares = new Integer[7][7];
     private Stage stage;
     private final int width = 500;
@@ -258,8 +257,7 @@ public class Controller extends Application {
         }
 
 
-        grid.add(moveOne, 1, 6, 2, 1);
-        grid.add(moveThree, 5, 6, 2, 1);
+        grid.add(rollDice, 5, 10, 3, 1);
 
         // Display the Stage
         stage.show();
@@ -273,8 +271,18 @@ public class Controller extends Application {
     public void takeTurn(PlayerModel player) {
         currPlayer = player;
         updateToolbar();
-        moveOne.setOnAction(e -> moveOneSquare(player));
-        moveThree.setOnAction(e -> move3Squares(player));
+        rollDice.setOnAction(e -> rollDie(player));
+
+        int c = GridPane.getColumnIndex(player.getSprite());
+        int r = GridPane.getRowIndex(player.getSprite());
+
+        if (r % 2 == 0) {
+            chanceTile();
+        } else if (c % 2 == 0) {
+            player.setGold(player.getGold() - 1);
+        } else {
+            player.setGold(player.getGold() + 1);
+        }
     }
 
     public void moveOneSquare(PlayerModel player) {
@@ -283,26 +291,33 @@ public class Controller extends Application {
         int r = GridPane.getRowIndex(user);
         grid.getChildren().remove(user);
 
-        if ((c == 7 && r == 1) || (c == 0 && r == 3) || (r == 2 || r == 4)) {
+        if ((c == 10 && (r == 1 || r == 5)) || (c == 0 && (r == 3 || r == 7)) || (r % 2 == 0)) {
             r++;
-        } else if (r == 3) {
+        } else if (r == 3 || r == 7) {
             c--;
-        } else if (c == 7 && r == 5) {
+        } else if (c == 10 && r == 9) {
             youWin();
         } else {
             c++;
         }
 
-        //user.setFill(playerModel.getCharacter());
         grid.add(user, c, r);
-        //user.setFill(playerModel.getCharacter());
-
     }
 
     public void move3Squares(PlayerModel player) {
         for (int i = 1; i <= 3; i++) {
             moveOneSquare(player);
         }
+    }
+
+    private void rollDie(PlayerModel player) {
+        Random random = new Random();
+        int roll = random.nextInt(6) + 1;
+        System.out.println("Roll is: " + roll);
+        for (int i = 1; i <= roll; i++) {
+            moveOneSquare(player);
+        }
+
     }
 
     private void updateToolbar() {
@@ -312,6 +327,10 @@ public class Controller extends Application {
         currentTurn.setText("Turn: " + (turn / players.size()));
         toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
             CornerRadii.EMPTY, Insets.EMPTY)));
+    }
+
+    private void chanceTile() {
+        System.out.println("You've landed on a Chance Tile!");
     }
 
     private void youWin() {

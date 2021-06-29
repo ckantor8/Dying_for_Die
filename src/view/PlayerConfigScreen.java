@@ -35,8 +35,8 @@ public class PlayerConfigScreen {
     private TextField name;
     private Color chtr = Color.BLACK;
     private String input;
-    private ToggleButton red;
-    private ToggleButton blue;
+    private ToggleButton orange;
+    private ToggleButton pink;
     private ToggleButton yellow;
     private ToggleButton purple;
 
@@ -108,17 +108,17 @@ public class PlayerConfigScreen {
         chtrs.setAlignment(Pos.CENTER);
         ToggleGroup chtr = new ToggleGroup();
 
-        red = new ToggleButton("Red");
-        red.setId("red");
-        red.setContentDisplay(ContentDisplay.TOP);
-        chtrs.getChildren().add(red);
-        red.setToggleGroup(chtr);
+        orange = new ToggleButton("Orange");
+        orange.setId("orange");
+        orange.setContentDisplay(ContentDisplay.TOP);
+        chtrs.getChildren().add(orange);
+        orange.setToggleGroup(chtr);
 
-        blue = new ToggleButton("Blue");
-        blue.setId("blue");
-        blue.setContentDisplay(ContentDisplay.TOP);
-        chtrs.getChildren().add(blue);
-        blue.setToggleGroup(chtr);
+        purple = new ToggleButton("Purple");
+        purple.setId("purple");
+        purple.setContentDisplay(ContentDisplay.TOP);
+        chtrs.getChildren().add(purple);
+        purple.setToggleGroup(chtr);
 
         yellow = new ToggleButton("Yellow");
         yellow.setId("yellow");
@@ -126,11 +126,11 @@ public class PlayerConfigScreen {
         chtrs.getChildren().add(yellow);
         yellow.setToggleGroup(chtr);
 
-        purple = new ToggleButton("Purple");
-        purple.setId("purple");
-        purple.setContentDisplay(ContentDisplay.TOP);
-        chtrs.getChildren().add(purple);
-        purple.setToggleGroup(chtr);
+        pink = new ToggleButton("Pink");
+        pink.setId("pink");
+        pink.setContentDisplay(ContentDisplay.TOP);
+        chtrs.getChildren().add(pink);
+        pink.setToggleGroup(chtr);
 
         options.getChildren().add(chtrs);
 
@@ -163,10 +163,10 @@ public class PlayerConfigScreen {
                 + " entered\nPlease enter a valid name");
             invalidName.show();
         } else {
-            if (red.isSelected()) {
-                chtr = Color.RED;
-            } else if (blue.isSelected()) {
-                chtr = Color.BLUE;
+            if (orange.isSelected()) {
+                chtr = Color.ORANGE;
+            } else if (pink.isSelected()) {
+                chtr = Color.PINK;
             } else if (yellow.isSelected()) {
                 chtr = Color.YELLOW;
             } else if (purple.isSelected()) {
