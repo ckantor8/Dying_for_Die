@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 import static org.junit.Assert.assertEquals;
 import static org.testfx.api.FxAssert.verifyThat;
 
-public class InitialTest extends ApplicationTest {
+public class ConfigTest extends ApplicationTest {
 
     public <T extends Node> T find(final String query) {
         return lookup(query).query();
