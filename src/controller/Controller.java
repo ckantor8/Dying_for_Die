@@ -12,11 +12,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import model.PlayerModel;
 import view.InitialConfigScreen;
@@ -28,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller extends Application {
     @FXML
@@ -49,6 +48,7 @@ public class Controller extends Application {
     private Label currGold;
     private Label currentTurn;
     private Button quitButton;
+    private Boolean gameWon = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -58,6 +58,8 @@ public class Controller extends Application {
     }
 
     private void initWelcomeScreen() {
+        gameWon = false;
+        players = new ArrayList<>();
         stage.setTitle("Your New Favorite Dungeon Crawler");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
@@ -263,15 +265,31 @@ public class Controller extends Application {
         stage.show();
 
         Collections.shuffle(players);
-        for (PlayerModel player : players) {
-            takeTurn(player);
+        while (!gameWon) {
+            for (PlayerModel player : players) {
+                System.out.println("Turns are looping");
+                takeTurn(player);
+            }
         }
     }
 
     public void takeTurn(PlayerModel player) {
         currPlayer = player;
         updateToolbar();
-        rollDice.setOnAction(e -> rollDie(player));
+        Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
+
+        choose.setContentText("Make a move!");
+        choose.setHeaderText("Hurry!");
+        choose.setTitle("Move");
+        ((Button) choose.getDialogPane().lookupButton(ButtonType.OK)).setText("Roll");
+        ((Button) choose.getDialogPane().lookupButton(ButtonType.CANCEL)).setText("Pass");
+        if (!gameWon) {
+            choose.showAndWait();
+        }
+
+        if (choose.getResult() == ButtonType.OK) {
+            rollDie(player);
+        }
 
         int c = GridPane.getColumnIndex(player.getSprite());
         int r = GridPane.getRowIndex(player.getSprite());
@@ -283,6 +301,8 @@ public class Controller extends Application {
         } else {
             player.setGold(player.getGold() + 1);
         }
+
+        System.out.println("turn taken");
     }
 
     public void moveOneSquare(PlayerModel player) {
@@ -296,6 +316,7 @@ public class Controller extends Application {
         } else if (r == 3 || r == 7) {
             c--;
         } else if (c == 10 && r == 9) {
+            gameWon = true;
             youWin();
         } else {
             c++;
