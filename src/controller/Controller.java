@@ -31,7 +31,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class Controller extends Application {
     @FXML
     private GridPane grid;
-    private Button rollDice = new Button("Roll the Dice!");
     private Integer[][] bonusSquares = new Integer[7][7];
     private Stage stage;
     private final int width = 500;
@@ -258,16 +257,12 @@ public class Controller extends Application {
             x++;
         }
 
-
-        grid.add(rollDice, 5, 10, 3, 1);
-
         // Display the Stage
         stage.show();
 
         Collections.shuffle(players);
         while (!gameWon) {
             for (PlayerModel player : players) {
-                System.out.println("Turns are looping");
                 takeTurn(player);
             }
         }
@@ -302,7 +297,6 @@ public class Controller extends Application {
             player.setGold(player.getGold() + 1);
         }
 
-        System.out.println("turn taken");
     }
 
     public void moveOneSquare(PlayerModel player) {
@@ -323,12 +317,6 @@ public class Controller extends Application {
         }
 
         grid.add(user, c, r);
-    }
-
-    public void move3Squares(PlayerModel player) {
-        for (int i = 1; i <= 3; i++) {
-            moveOneSquare(player);
-        }
     }
 
     private void rollDie(PlayerModel player) {
@@ -381,6 +369,10 @@ public class Controller extends Application {
 
     public Label getP1() {
         return p1;
+    }
+
+    public PlayerModel getCurrPlayer() {
+        return currPlayer;
     }
 
     public Label getCurrGold() {
