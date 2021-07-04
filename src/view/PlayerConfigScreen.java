@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
@@ -34,6 +35,7 @@ public class PlayerConfigScreen {
     private VBox options;
     private TextField name;
     private Color chtr = Color.BLACK;
+    private Image spriteImg;
     private String input;
     private ToggleButton orange;
     private ToggleButton pink;
@@ -108,26 +110,46 @@ public class PlayerConfigScreen {
         chtrs.setAlignment(Pos.CENTER);
         ToggleGroup chtr = new ToggleGroup();
 
-        orange = new ToggleButton("Orange");
+        ImageView knightImg = new ImageView("file:resources/images/sprites/knight.png");
+        knightImg.setFitWidth(60); knightImg.setFitHeight(60);
+        orange = new ToggleButton("Knight", knightImg);
+        orange.getStyleClass().add("orangeKnight");
+        orange.getStyleClass().add("button");
         orange.setId("orange");
+        orange.setMinSize(80,100); orange.setMaxSize(80,100);
         orange.setContentDisplay(ContentDisplay.TOP);
         chtrs.getChildren().add(orange);
         orange.setToggleGroup(chtr);
 
-        purple = new ToggleButton("Purple");
+        ImageView vampireImg = new ImageView("file:resources/images/sprites/vampire.png");
+        vampireImg.setFitWidth(60); vampireImg.setFitHeight(65);
+        purple = new ToggleButton("Vampire", vampireImg);
+        purple.getStyleClass().add("purpleVampire");
+        purple.getStyleClass().add("button");
         purple.setId("purple");
         purple.setContentDisplay(ContentDisplay.TOP);
+        purple.setMinSize(80,100); purple.setMaxSize(80,100);
         chtrs.getChildren().add(purple);
         purple.setToggleGroup(chtr);
 
-        yellow = new ToggleButton("Yellow");
+        ImageView reaperImg = new ImageView("file:resources/images/sprites/reaper.png");
+        reaperImg.setFitWidth(65); reaperImg.setFitHeight(70);
+        yellow = new ToggleButton("Reaper", reaperImg);
+        yellow.getStyleClass().add("yellowReaper");
+        yellow.getStyleClass().add("button");
         yellow.setId("yellow");
+        yellow.setMinSize(80,100); yellow.setMaxSize(80,100);
         yellow.setContentDisplay(ContentDisplay.TOP);
         chtrs.getChildren().add(yellow);
         yellow.setToggleGroup(chtr);
 
-        pink = new ToggleButton("Pink");
+        ImageView priestImg = new ImageView("file:resources/images/sprites/priest.png");
+        priestImg.setFitWidth(65); priestImg.setFitHeight(70);
+        pink = new ToggleButton("Priest", priestImg);
+        pink.getStyleClass().add("pinkPriest");
+        pink.getStyleClass().add("button");
         pink.setId("pink");
+        pink.setMinSize(80,100); pink.setMaxSize(80,100);
         pink.setContentDisplay(ContentDisplay.TOP);
         chtrs.getChildren().add(pink);
         pink.setToggleGroup(chtr);
@@ -149,7 +171,7 @@ public class PlayerConfigScreen {
 
         configPane.setMargin(options, new Insets(0, 0, 0, 0));
         configPane.setMargin(buttons, new Insets(0, 0, 10, 0));
-        configScene.getStylesheets().add("file:resources/css/ConfigScreen.css");
+        configScene.getStylesheets().add("file:resources/css/PlayerScreen.css");
         return configScene;
     }
 
@@ -165,12 +187,16 @@ public class PlayerConfigScreen {
         } else {
             if (orange.isSelected()) {
                 chtr = Color.ORANGE;
+                spriteImg = new Image("file:resources/images/sprites/knight.png", 100, 100, false, false);
             } else if (pink.isSelected()) {
                 chtr = Color.PINK;
+                spriteImg = new Image("file:resources/images/sprites/priest.png", 115, 120, false, false);
             } else if (yellow.isSelected()) {
                 chtr = Color.YELLOW;
+                spriteImg = new Image("file:resources/images/sprites/reaper.png", 110, 115, false, false);
             } else if (purple.isSelected()) {
                 chtr = Color.PURPLE;
+                spriteImg = new Image("file:resources/images/sprites/vampire.png", 105, 105, false, false);
             } else {
                 Alert invalidW = new Alert(Alert.AlertType.ERROR);
                 invalidW.setTitle("Error Dialog");
@@ -203,5 +229,7 @@ public class PlayerConfigScreen {
     public Button getReturnButton() {
         return returnButton;
     }
+
+    public Image getSpriteImg() { return spriteImg; }
 
 }

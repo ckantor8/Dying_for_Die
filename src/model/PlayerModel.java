@@ -1,5 +1,7 @@
 package model;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -8,6 +10,7 @@ public class PlayerModel {
     private Color character;
     private int gold;
     private Circle sprite;
+    private Image spriteImg;
 
     public PlayerModel(String name, Color character, int gold) {
         this.name = name;
@@ -46,5 +49,9 @@ public class PlayerModel {
     public Circle getSprite() {
         return sprite;
     }
+
+    public void setSpriteImg(Image spriteImg) { this.spriteImg = spriteImg; }
+
+    public Image getSpriteImg() { return this.spriteImg; }
 
 }

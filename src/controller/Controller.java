@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -46,6 +47,7 @@ public class Controller extends Application {
     private Label p1;
     private Label currGold;
     private Label currentTurn;
+    private ImageView currSpriteImg;
     private Button quitButton;
     private Boolean gameWon = false;
 
@@ -115,6 +117,7 @@ public class Controller extends Application {
                 PlayerModel player =
                     new PlayerModel(configScreen.getInput(),
                         configScreen.getChtr(), startingGold);
+                player.setSpriteImg(configScreen.getSpriteImg());
                 players.add(player);
                 if (players.size() == numPlayers) {
                     try {
@@ -157,6 +160,14 @@ public class Controller extends Application {
             CornerRadii.EMPTY, Insets.EMPTY)));
         toolbar.setMinHeight(100);
         toolbar.setAlignment(Pos.CENTER);
+
+        // Sprite Configuration on Left of Toolbar
+        currSpriteImg = new ImageView();
+        currSpriteImg.setImage(players.get(0).getSpriteImg());
+        VBox spriteDisp = new VBox(currSpriteImg);
+        spriteDisp.setPadding(new Insets(10, 10, 10, 10));
+
+
         //Display current player's info
         VBox playerInfo = new VBox();
         p1 = new Label("Player: " + players.get(0).getName());
@@ -187,7 +198,7 @@ public class Controller extends Application {
             }
         });
         currTurn.getChildren().addAll(currentTurn, quitButton);
-        toolbar.getChildren().addAll(playerInfo, currTurn);
+        toolbar.getChildren().addAll(spriteDisp, playerInfo, currTurn);
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
@@ -272,7 +283,7 @@ public class Controller extends Application {
         currPlayer = player;
         updateToolbar();
         Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
-
+        choose.setX(170); choose.setY(400);
         choose.setContentText("Make a move!");
         choose.setHeaderText("Hurry!");
         choose.setTitle("Move");
@@ -334,6 +345,7 @@ public class Controller extends Application {
         p1.setText("Player: " + currPlayer.getName());
         currGold.setText("Gold: " + currPlayer.getGold());
         currentTurn.setText("Turn: " + (turn / players.size()));
+        currSpriteImg.setImage(currPlayer.getSpriteImg());
         toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
             CornerRadii.EMPTY, Insets.EMPTY)));
     }
