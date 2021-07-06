@@ -74,13 +74,13 @@ public class BoardTest extends ApplicationTest {
 
     }
 
-    @Test // Test that chance tiles function correctly //Alistair Sequeira
-    public void testChanceTiles() {
+    @Test // Test that character sprites function correctly //Alistair Sequeira
+    public void testSprites() {
 
     }
 
-    @Test // Test that one of the chance events, going again, works //Alistair Sequeira
-    public void testGoAgain() {
+    @Test // Test that Toolbar displays correct info for M3 //Alistair Sequeira
+    public void testNewToolbar() {
 
     }
 
