@@ -13,7 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -27,7 +32,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Controller extends Application {
     @FXML
@@ -283,7 +287,8 @@ public class Controller extends Application {
         currPlayer = player;
         updateToolbar();
         Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
-        choose.setX(170); choose.setY(400);
+        choose.setX(170);
+        choose.setY(400);
         choose.setContentText("Make a move!");
         choose.setHeaderText("Hurry!");
         choose.setTitle("Move");

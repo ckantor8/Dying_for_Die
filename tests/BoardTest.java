@@ -46,7 +46,7 @@ public class BoardTest extends ApplicationTest {
         clickOn("Advance");
     }
 
-//---------------------------Milestone 3 Tests--------------------------
+    //---------------------------Milestone 3 Tests--------------------------
 
     @Test //Test that players can move across tiles //Cody Kantor
     public void testMovement() {

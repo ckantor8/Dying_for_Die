@@ -1,7 +1,6 @@
 package model;
 
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
@@ -50,8 +49,12 @@ public class PlayerModel {
         return sprite;
     }
 
-    public void setSpriteImg(Image spriteImg) { this.spriteImg = spriteImg; }
+    public void setSpriteImg(Image spriteImg) {
+        this.spriteImg = spriteImg;
+    }
 
-    public Image getSpriteImg() { return this.spriteImg; }
+    public Image getSpriteImg() {
+        return this.spriteImg;
+    }
 
 }
