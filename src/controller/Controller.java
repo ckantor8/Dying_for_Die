@@ -387,7 +387,7 @@ public class Controller extends Application {
 
     public Label getP1() {
         return p1;
-    }git co
+    }
 
     public PlayerModel getCurrPlayer() {
         return currPlayer;
