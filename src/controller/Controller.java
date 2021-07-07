@@ -387,7 +387,7 @@ public class Controller extends Application {
 
     public Label getP1() {
         return p1;
-    }
+    }git co
 
     public PlayerModel getCurrPlayer() {
         return currPlayer;
@@ -397,8 +397,12 @@ public class Controller extends Application {
         return currGold;
     }
 
-    public Image getCurrSpriteImg() { return currSpriteImg.getImage(); }
+    public Image getCurrSpriteImg() {
+        return currSpriteImg.getImage();
+    }
 
-    public Label getCurrTurn() { return currentTurn; }
+    public Label getCurrTurn() {
+        return currentTurn;
+    }
 
 }
