@@ -74,14 +74,30 @@ public class BoardTest extends ApplicationTest {
 
     }
 
-    @Test // Test that character sprites function correctly //Alistair Sequeira
+    @Test // Test that character sprites function correctly
+    // (at initial state and after rolling for next player) //Alistair Sequeira
     public void testSprites() {
-
+        PlayerModel player = controller.getCurrPlayer();
+        assertEquals(player.getSpriteImg(),controller.getCurrSpriteImg());
+        clickOn("Roll");
+        player = controller.getCurrPlayer();
+        assertEquals(player.getSpriteImg(),controller.getCurrSpriteImg());
     }
 
-    @Test // Test that Toolbar displays correct info for M3 //Alistair Sequeira
+    @Test // Test that Toolbar displays correct info for M3 (over multiple rolls) //Alistair Sequeira
     public void testNewToolbar() {
-
+        int numTurnsTested = 3; // number of turns per player to test for
+        int numPlayers = controller.getPlayers();
+        for (int turn = 1; turn <= numTurnsTested; turn++) {
+            System.out.println("Testing Toolbar for all players for Turn " + turn);
+            for (int i = 0; i < numPlayers; i++) {
+                PlayerModel player = controller.getCurrPlayer();
+                assertEquals(player.getName(), controller.getP1().getText().split("Player: ", 2)[1]);
+                assertEquals(player.getGold(), Integer.parseInt(controller.getCurrGold().getText().split("Gold: ", 2)[1]));
+                assertEquals(turn, Integer.parseInt(controller.getCurrTurn().getText().split("Turn: ", 2)[1]));
+                clickOn("Roll");
+            }
+        }
     }
 
     @Test // Test that player labels correctly update //Aayush Dixit
