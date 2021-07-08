@@ -261,7 +261,7 @@ public class Controller extends Application {
     public void setupToolbar() {
         //Vbox for organizing toolbar and board
         vbox = new VBox();
-        toolbar = new HBox(90);
+        toolbar = new HBox(80);
         vbox.getChildren().add(toolbar);
 
         //toolbar configurations
@@ -318,8 +318,8 @@ public class Controller extends Application {
         dice.add(diceFive);
         dice.add(diceSix);
         for (ImageView diceImage : dice) {
-            diceImage.setFitHeight(50);
-            diceImage.setFitWidth(50);
+            diceImage.setFitHeight(45);
+            diceImage.setFitWidth(45);
         }
         diceImg = new Group(diceOne);
         timeline = new Timeline();
@@ -360,8 +360,8 @@ public class Controller extends Application {
             }
         ));
         diceRoll = new ImageView();
-        diceRoll.setFitWidth(50);
-        diceRoll.setFitHeight(50);
+        diceRoll.setFitWidth(45);
+        diceRoll.setFitHeight(45);
         rolled = new Label();
         diceBox.setMinWidth(80);
         diceBox.getChildren().add(diceImg);
@@ -415,10 +415,10 @@ public class Controller extends Application {
         }
 
         /////////FOR TESTING/DEBUGGING PURPOSES/////////
-        /*if (choose.getResult() == ButtonType.CANCEL) {
+        if (choose.getResult() == ButtonType.CANCEL) {
             gameWon = true;
             stage.close();
-        }*/
+        }
         ///////////////////////////////////////////////
 
         int c = GridPane.getColumnIndex(player.getSprite());
@@ -503,7 +503,7 @@ public class Controller extends Application {
     }
 
     private void chanceTile() {
-        System.out.println("You've landed on a Chance Tile!");
+        //System.out.println("You've landed on a Chance Tile!");
     }
 
     private void youWin() {
