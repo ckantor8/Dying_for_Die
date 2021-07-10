@@ -38,7 +38,7 @@ import java.util.Random;
 public class Controller extends Application {
     @FXML
     private GridPane grid;
-    private Integer[][] bonusSquares = new Integer[7][7];
+    private String[][] squareGrid = new String[10][11];
     private Stage stage;
     private final int width = 500;
     private final int height = 500;
@@ -234,6 +234,7 @@ public class Controller extends Application {
                     rec.setHeight(75);
                     rec.setArcWidth(5);
                     rec.setArcHeight(5);
+                    squareGrid[i][j] = "Red";
                     rec.setStroke(Color.BLACK);
                     rec.setFill(Color.rgb(105, 0, 12, .99));
                     grid.add(rec, j, i);
@@ -245,13 +246,12 @@ public class Controller extends Application {
                     rec.setArcWidth(5);
                     rec.setArcHeight(5);
                     rec.setStroke(Color.BLACK);
+                    squareGrid[i][j] = "Green";
                     rec.setFill(Color.rgb(1, 105, 8, .99));
                     grid.add(rec, j, i);
                 }
             }
         }
-
-
         grid.getStyleClass().add("mygridStyle");
         vbox.getChildren().add(grid);
         // Create the Scene
@@ -461,11 +461,13 @@ public class Controller extends Application {
 
         if (r % 2 == 0) {
             chanceTile();
-        } else if (c % 2 == 0) {
-            player.setGold(player.getGold() - 1);
+        } /*else if (c % 2 == 0) {
+            if (player.getGold() != 0) {
+                player.setGold(player.getGold() - 1);
+            }
         } else {
             player.setGold(player.getGold() + 1);
-        }
+        } */
 
     }
 
@@ -515,7 +517,26 @@ public class Controller extends Application {
         for (int i = 1; i <= roll; i++) {
             moveOneSquare(player);
         }
+        updateMoney(player);
+    }
 
+    private void updateMoney(PlayerModel player) {
+        Circle user = player.getSprite();
+        int c = GridPane.getColumnIndex(user);
+        int r = GridPane.getRowIndex(user);
+        String squareColor = squareGrid[r][c];
+
+        if (squareColor == "Red") {
+            if (player.getGold() >= 4) {
+                player.setGold(player.getGold() - 4);
+            } else {
+                player.setGold(0);
+            }
+        }
+        if (squareColor == "Green") {
+            player.setGold(player.getGold() + 6);
+        }
+        currGold.setText("Gold: " + currPlayer.getGold());
     }
 
     private void updateToolbar() {
@@ -584,5 +605,8 @@ public class Controller extends Application {
 
     public Label getCurrTurn() {
         return currentTurn;
+    }
+    public String[][] getSquareGrid() {
+        return squareGrid;
     }
 }

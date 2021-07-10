@@ -66,12 +66,38 @@ public class BoardTest extends ApplicationTest {
 
     @Test // Test that green squares give money //Thomas Crawford
     public void testGetMoney() {
-
+        PlayerModel player = controller.getCurrPlayer();
+        int originalGold = player.getGold();
+        clickOn("Roll");
+        int r = GridPane.getRowIndex(player.getSprite());
+        int c = GridPane.getColumnIndex(player.getSprite());
+        String color = controller.getSquareGrid()[r][c];
+        if (color != "Green") {
+            player.setGold(originalGold);
+            clickOn("Roll");
+            clickOn("Roll");
+        }
+        if (color == "Green") {
+            assertEquals(10, player.getGold());
+        }
     }
 
     @Test // Test that red squares take money //Thomas Crawford
     public void testLoseMoney() {
-
+        PlayerModel player = controller.getCurrPlayer();
+        int originalGold = player.getGold();
+        clickOn("Roll");
+        int r = GridPane.getRowIndex(player.getSprite());
+        int c = GridPane.getColumnIndex(player.getSprite());
+        String color = controller.getSquareGrid()[r][c];
+        if (color != "Red") {
+            player.setGold(originalGold);
+            clickOn("Roll");
+            clickOn("Roll");
+        }
+        if (color == "Red") {
+            assertEquals(0, player.getGold());
+        }
     }
 
     @Test // Test that character sprites function correctly
