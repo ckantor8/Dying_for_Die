@@ -18,14 +18,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.PlayerModel;
@@ -214,8 +210,47 @@ public class Controller extends Application {
             }
         }
         grid.setBackground(background1);*/
-        grid.setBackground(new Background(new BackgroundFill(Color.BLACK,
-            new CornerRadii(0), new Insets(0))));
+        Image image0 = new Image("file:resources/images/backgrounds/DungeonBackground.jpg");
+        BackgroundSize backgroundSize0 = new BackgroundSize(
+                BackgroundSize.AUTO, BackgroundSize.AUTO,
+                true, true, true, true);
+        BackgroundImage backgroundImage0 = new BackgroundImage(image0,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                backgroundSize0);
+        Background background1 = new Background(backgroundImage0);
+        grid.setBackground(background1);
+        
+        for (int i = 1; i <= 9; i = i + 2) {
+            for (int j = 0; j <= 10; j++) {
+                if ((i == 1) && j == 0) {
+                    continue;
+                }
+                Random rand = new Random();
+                int num = rand.nextInt(2);
+                if (num == 0) {
+                    Rectangle rec = new Rectangle();
+                    rec.setWidth(80);
+                    rec.setHeight(75);
+                    rec.setArcWidth(5);
+                    rec.setArcHeight(5);
+                    rec.setStroke(Color.BLACK);
+                    rec.setFill(Color.rgb(105, 0, 12, .99));
+                    grid.add(rec, j, i);
+                }
+                if (num == 1) {
+                    Rectangle rec = new Rectangle();
+                    rec.setWidth(80);
+                    rec.setHeight(75);
+                    rec.setArcWidth(5);
+                    rec.setArcHeight(5);
+                    rec.setStroke(Color.BLACK);
+                    rec.setFill(Color.rgb(1, 105, 8, .99));
+                    grid.add(rec, j, i);
+                }
+            }
+        }
+
 
         grid.getStyleClass().add("mygridStyle");
         vbox.getChildren().add(grid);
