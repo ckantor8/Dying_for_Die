@@ -450,10 +450,10 @@ public class Controller extends Application {
         }
 
         /////////FOR TESTING/DEBUGGING PURPOSES/////////
-        if (choose.getResult() == ButtonType.CANCEL) {
-            gameWon = true;
-            stage.close();
-        }
+//        if (choose.getResult() == ButtonType.CANCEL) {
+//            gameWon = true;
+//            stage.close();
+//        }
         ///////////////////////////////////////////////
 
         int c = GridPane.getColumnIndex(player.getSprite());
@@ -511,7 +511,7 @@ public class Controller extends Application {
         } else {
             diceRoll.setImage(new Image("file:resources/images/sprites/six.png"));
         }
-        rolled.setText(currPlayer.getName() + " rolled a " + roll);
+        rolled.setText(currPlayer.getName() + " rolled...");
         for (int i = 1; i <= roll; i++) {
             moveOneSquare(player);
         }
