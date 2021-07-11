@@ -66,6 +66,7 @@ public class Controller extends Application {
     private ImageView diceFive;
     private ImageView diceSix;
     private ImageView diceRoll;
+    private int roll;
     private Label rolled;
     private VBox otherPlayers;
     private Label other1 = new Label();
@@ -87,7 +88,7 @@ public class Controller extends Application {
         stage.setTitle("Your New Favorite Dungeon Crawler");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
-            + "images/backgrounds/welcome_screen.png");
+                + "images/backgrounds/welcome_screen.png");
         String playText = new String("Click Here to Begin");
         String stats = null;
         Screen welcomeScreen = new Screen(width, height, bigText, bg, playText);
@@ -138,8 +139,8 @@ public class Controller extends Application {
         advanceButton.setOnAction(e -> {
             if (configScreen.checkSelections() > 0) {
                 PlayerModel player =
-                    new PlayerModel(configScreen.getInput(),
-                        configScreen.getChtr(), startingGold);
+                        new PlayerModel(configScreen.getInput(),
+                                configScreen.getChtr(), startingGold);
                 player.setSpriteImg(configScreen.getSpriteImg());
                 players.add(player);
                 if (players.size() == numPlayers) {
@@ -220,7 +221,7 @@ public class Controller extends Application {
                 backgroundSize0);
         Background background1 = new Background(backgroundImage0);
         grid.setBackground(background1);
-        
+
         for (int i = 1; i <= 9; i = i + 2) {
             for (int j = 0; j <= 10; j++) {
                 if ((i == 1) && j == 0) {
@@ -301,7 +302,7 @@ public class Controller extends Application {
 
         //toolbar configurations
         toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
-            CornerRadii.EMPTY, Insets.EMPTY)));
+                CornerRadii.EMPTY, Insets.EMPTY)));
         toolbar.setMinHeight(100);
         toolbar.setAlignment(Pos.CENTER);
 
@@ -328,7 +329,7 @@ public class Controller extends Application {
         for (PlayerModel player : players) {
             if (player != currPlayer) {
                 others[j].setText(player.getName() + ": "
-                    + player.getGold() + " Gold");
+                        + player.getGold() + " Gold");
                 j++;
             }
         }
@@ -360,39 +361,39 @@ public class Controller extends Application {
         timeline = new Timeline();
         timeline.setCycleCount(2);
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100),
-            (ActionEvent e) -> {
-                diceImg.getChildren().setAll(diceTwo);
-            }
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceTwo);
+                }
         ));
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200),
-            (ActionEvent e) -> {
-                diceImg.getChildren().setAll(diceThree);
-            }
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceThree);
+                }
         ));
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300),
-            (ActionEvent e) -> {
-                diceImg.getChildren().setAll(diceFour);
-            }
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceFour);
+                }
         ));
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(400),
-            (ActionEvent e) -> {
-                diceImg.getChildren().setAll(diceFive);
-            }
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceFive);
+                }
         ));
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
-            (ActionEvent e) -> {
-                diceImg.getChildren().setAll(diceSix);
-            }
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceSix);
+                }
         ));
 
         timeline.getKeyFrames().add(new KeyFrame(Duration.millis(600),
-            (ActionEvent e) -> {
-                diceImg.getChildren().setAll(diceOne);
-            }
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceOne);
+                }
         ));
         diceRoll = new ImageView();
         diceRoll.setFitWidth(45);
@@ -499,7 +500,7 @@ public class Controller extends Application {
             updateToolbar();
         });
         Random random = new Random();
-        int roll = random.nextInt(6) + 1;
+        roll = random.nextInt(6) + 1;
         if (roll == 1) {
             diceRoll.setImage(new Image("file:resources/images/sprites/one.png"));
         } else if (roll == 2) {
@@ -549,12 +550,12 @@ public class Controller extends Application {
         for (PlayerModel player : players) {
             if (player != currPlayer) {
                 others[j].setText(player.getName() + ": "
-                    + player.getGold() + " Gold");
+                        + player.getGold() + " Gold");
                 j++;
             }
         }
         toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
-            CornerRadii.EMPTY, Insets.EMPTY)));
+                CornerRadii.EMPTY, Insets.EMPTY)));
 
     }
 
@@ -565,9 +566,9 @@ public class Controller extends Application {
     private void youWin() {
         stage.setTitle("You Win!");
         String bigText = new String("Congratulations on winning \n "
-            + "Dying for Die, " + currPlayer.getName() + "!");
+                + "Dying for Die, " + currPlayer.getName() + "!");
         String bg = new String("file:resources/"
-            + "images/backgrounds/win_screen.jpg");
+                + "images/backgrounds/win_screen.jpg");
         String playText = new String("Click Here to Play Again");
         Screen winScreen = new Screen(width, height, bigText, bg, playText);
 
@@ -608,5 +609,17 @@ public class Controller extends Application {
     }
     public String[][] getSquareGrid() {
         return squareGrid;
+    }
+
+    public Label getOther1() {
+        return other1;
+    }
+
+    public ImageView getDiceRoll() {
+        return diceRoll;
+    }
+
+    public int getRoll() {
+        return roll;
     }
 }
