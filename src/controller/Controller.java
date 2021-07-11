@@ -18,14 +18,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.PlayerModel;
@@ -42,7 +38,7 @@ import java.util.Random;
 public class Controller extends Application {
     @FXML
     private GridPane grid;
-    private Integer[][] bonusSquares = new Integer[7][7];
+    private String[][] squareGrid = new String[10][11];
     private Stage stage;
     private final int width = 500;
     private final int height = 500;
@@ -70,6 +66,7 @@ public class Controller extends Application {
     private ImageView diceFive;
     private ImageView diceSix;
     private ImageView diceRoll;
+    private int roll;
     private Label rolled;
     private VBox otherPlayers;
     private Label other1 = new Label();
@@ -91,7 +88,7 @@ public class Controller extends Application {
         stage.setTitle("Your New Favorite Dungeon Crawler");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
-            + "images/backgrounds/welcome_screen.png");
+                + "images/backgrounds/welcome_screen.png");
         String playText = new String("Click Here to Begin");
         String stats = null;
         Screen welcomeScreen = new Screen(width, height, bigText, bg, playText);
@@ -142,8 +139,8 @@ public class Controller extends Application {
         advanceButton.setOnAction(e -> {
             if (configScreen.checkSelections() > 0) {
                 PlayerModel player =
-                    new PlayerModel(configScreen.getInput(),
-                        configScreen.getChtr(), startingGold);
+                        new PlayerModel(configScreen.getInput(),
+                                configScreen.getChtr(), startingGold);
                 player.setSpriteImg(configScreen.getSpriteImg());
                 players.add(player);
                 if (players.size() == numPlayers) {
@@ -169,147 +166,17 @@ public class Controller extends Application {
     }
 
     public void generateBoard() throws IOException {
+        //Randomize player order
+        Collections.shuffle(players);
+        currPlayer = players.get(0);
         // Create the FXMLLoader
         FXMLLoader loader = new FXMLLoader();
         // Path to the FXML File
         String fxmlDocPath = "Board.fxml";
         FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
 
-        //loader.setController(this);
+        setupToolbar();
 
-        //Vbox for organizing toolbar and board
-        vbox = new VBox();
-        toolbar = new HBox(150);
-        vbox.getChildren().add(toolbar);
-
-        //toolbar configurations
-        toolbar.setBackground(new Background(new BackgroundFill(players.get(0).getCharacter(),
-            CornerRadii.EMPTY, Insets.EMPTY)));
-        toolbar.setMinHeight(100);
-        toolbar.setAlignment(Pos.CENTER);
-
-        // Sprite Configuration on Left of Toolbar
-        currSpriteImg = new ImageView();
-        currSpriteImg.setImage(players.get(0).getSpriteImg());
-        VBox spriteDisp = new VBox(currSpriteImg);
-        spriteDisp.setPadding(new Insets(10, 10, 10, 10));
-
-
-        //Display current player's info
-        VBox playerInfo = new VBox();
-        p1 = new Label("Player: " + players.get(0).getName());
-        currGold = new Label("Gold: " + players.get(0).getGold());
-        Label message = new Label("It's your turn!");
-        playerInfo.setAlignment(Pos.CENTER_LEFT);
-        playerInfo.setMinHeight(100);
-        playerInfo.setMinWidth(75);
-        playerInfo.getChildren().addAll(p1, currGold, message);
-
-        //Displaying other player's info
-        otherPlayers = new VBox();
-        int j = 0;
-        currPlayer = players.get(0);
-        for (PlayerModel player : players) {
-            if (player != currPlayer) {
-                others[j].setText(player.getName() + ": "
-                        + player.getGold() + " Gold");
-                j++;
-            }
-        }
-        Label txt = new Label("Other players:");
-        otherPlayers.setAlignment(Pos.CENTER_LEFT);
-        otherPlayers.setMinHeight(100);
-        otherPlayers.setMinWidth(60);
-        otherPlayers.getChildren().addAll(txt, other1, other2, other3);
-
-        //Setting up dice
-        diceBox = new VBox();
-        diceOne = new ImageView("file:resources/images/sprites/one.png");
-        diceTwo = new ImageView("file:resources/images/sprites/two.png");
-        diceThree = new ImageView("file:resources/images/sprites/three.png");
-        diceFour = new ImageView("file:resources/images/sprites/four.png");
-        diceFive = new ImageView("file:resources/images/sprites/five.png");
-        diceSix = new ImageView("file:resources/images/sprites/one.png");
-        dice.add(diceOne);
-        dice.add(diceTwo);
-        dice.add(diceThree);
-        dice.add(diceFour);
-        dice.add(diceFive);
-        dice.add(diceSix);
-        for (ImageView diceImage : dice) {
-            diceImage.setFitHeight(50);
-            diceImage.setFitWidth(50);
-        }
-        diceImg = new Group(diceOne);
-        timeline = new Timeline();
-        timeline.setCycleCount(2);
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100),
-                (ActionEvent e) -> {
-            diceImg.getChildren().setAll(diceTwo);
-                }
-        ));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200),
-                (ActionEvent e) -> {
-                    diceImg.getChildren().setAll(diceThree);
-                }
-        ));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300),
-                (ActionEvent e) -> {
-                    diceImg.getChildren().setAll(diceFour);
-                }
-        ));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(400),
-                (ActionEvent e) -> {
-                    diceImg.getChildren().setAll(diceFive);
-                }
-        ));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
-                (ActionEvent e) -> {
-                    diceImg.getChildren().setAll(diceSix);
-                }
-        ));
-
-        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(600),
-                (ActionEvent e) -> {
-                    diceImg.getChildren().setAll(diceOne);
-                }
-        ));
-        diceRoll = new ImageView();
-        diceRoll.setFitWidth(50);
-        diceRoll.setFitHeight(50);
-        rolled = new Label();
-        diceBox.setMinWidth(80);
-        diceBox.getChildren().add(diceImg);
-        diceBox.getChildren().add(diceRoll);
-        diceBox.getChildren().add(rolled);
-
-        //Display current turn and quit button
-        turn = 1;
-        VBox currTurn = new VBox();
-        currentTurn = new Label("Turn: " + (turn / players.size()));
-        currTurn.setAlignment(Pos.CENTER_RIGHT);
-        currTurn.setMinWidth(50);
-        currTurn.setMinHeight(100);
-        quitButton = new Button("Quit");
-        quitButton.setId("quitButton2");
-        quitButton.setOnAction(e -> {
-            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmation.setContentText("Are you sure you want to quit the game?");
-            confirmation.setHeaderText("Quit");
-            confirmation.setTitle("Quit");
-            confirmation.showAndWait();
-            if (confirmation.getResult() == ButtonType.OK) {
-                initWelcomeScreen();
-            }
-        });
-        currTurn.getChildren().addAll(currentTurn, quitButton);
-        spriteDisp.setMaxWidth(50);
-        spriteDisp.setMaxHeight(50);
-        toolbar.getChildren().addAll(spriteDisp, playerInfo, otherPlayers, diceBox, currTurn);
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
@@ -344,9 +211,48 @@ public class Controller extends Application {
             }
         }
         grid.setBackground(background1);*/
+        Image image0 = new Image("file:resources/images/backgrounds/DungeonBackground.jpg");
+        BackgroundSize backgroundSize0 = new BackgroundSize(
+                BackgroundSize.AUTO, BackgroundSize.AUTO,
+                true, true, true, true);
+        BackgroundImage backgroundImage0 = new BackgroundImage(image0,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                backgroundSize0);
+        Background background1 = new Background(backgroundImage0);
+        grid.setBackground(background1);
 
-        grid.setBackground(new Background(new BackgroundFill(Color.BLACK,
-            new CornerRadii(0), new Insets(0))));
+        for (int i = 1; i <= 9; i = i + 2) {
+            for (int j = 0; j <= 10; j++) {
+                if ((i == 1) && j == 0) {
+                    continue;
+                }
+                Random rand = new Random();
+                int num = rand.nextInt(2);
+                if (num == 0) {
+                    Rectangle rec = new Rectangle();
+                    rec.setWidth(80);
+                    rec.setHeight(75);
+                    rec.setArcWidth(5);
+                    rec.setArcHeight(5);
+                    squareGrid[i][j] = "Red";
+                    rec.setStroke(Color.BLACK);
+                    rec.setFill(Color.rgb(105, 0, 12, .99));
+                    grid.add(rec, j, i);
+                }
+                if (num == 1) {
+                    Rectangle rec = new Rectangle();
+                    rec.setWidth(80);
+                    rec.setHeight(75);
+                    rec.setArcWidth(5);
+                    rec.setArcHeight(5);
+                    rec.setStroke(Color.BLACK);
+                    squareGrid[i][j] = "Green";
+                    rec.setFill(Color.rgb(1, 105, 8, .99));
+                    grid.add(rec, j, i);
+                }
+            }
+        }
         grid.getStyleClass().add("mygridStyle");
         vbox.getChildren().add(grid);
         // Create the Scene
@@ -381,13 +287,146 @@ public class Controller extends Application {
 
         // Display the Stage
         stage.show();
-
-        Collections.shuffle(players);
         while (!gameWon) {
             for (PlayerModel player : players) {
                 takeTurn(player);
             }
         }
+    }
+
+    public void setupToolbar() {
+        //Vbox for organizing toolbar and board
+        vbox = new VBox();
+        toolbar = new HBox(80);
+        vbox.getChildren().add(toolbar);
+
+        //toolbar configurations
+        toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
+                CornerRadii.EMPTY, Insets.EMPTY)));
+        toolbar.setMinHeight(100);
+        toolbar.setAlignment(Pos.CENTER);
+
+        // Sprite Configuration on Left of Toolbar
+        currSpriteImg = new ImageView();
+        currSpriteImg.setImage(currPlayer.getSpriteImg());
+        VBox spriteDisp = new VBox(currSpriteImg);
+        spriteDisp.setPadding(new Insets(10, 10, 10, 10));
+
+
+        //Display current player's info
+        VBox playerInfo = new VBox();
+        p1 = new Label("Current Player: " + currPlayer.getName());
+        currGold = new Label("Gold: " + currPlayer.getGold());
+        Label message = new Label("It's your turn!");
+        playerInfo.setAlignment(Pos.CENTER_LEFT);
+        playerInfo.setMinHeight(100);
+        playerInfo.setMinWidth(75);
+        playerInfo.getChildren().addAll(p1, currGold, message);
+
+        //Displaying other player's info
+        otherPlayers = new VBox();
+        int j = 0;
+        for (PlayerModel player : players) {
+            if (player != currPlayer) {
+                others[j].setText(player.getName() + ": "
+                        + player.getGold() + " Gold");
+                j++;
+            }
+        }
+        Label txt = new Label("Other players:");
+        otherPlayers.setAlignment(Pos.CENTER_LEFT);
+        otherPlayers.setMinHeight(100);
+        otherPlayers.setMinWidth(60);
+        otherPlayers.getChildren().addAll(txt, other1, other2, other3);
+
+        //Setting up dice
+        diceBox = new VBox();
+        diceOne = new ImageView("file:resources/images/sprites/one.png");
+        diceTwo = new ImageView("file:resources/images/sprites/two.png");
+        diceThree = new ImageView("file:resources/images/sprites/three.png");
+        diceFour = new ImageView("file:resources/images/sprites/four.png");
+        diceFive = new ImageView("file:resources/images/sprites/five.png");
+        diceSix = new ImageView("file:resources/images/sprites/one.png");
+        dice.add(diceOne);
+        dice.add(diceTwo);
+        dice.add(diceThree);
+        dice.add(diceFour);
+        dice.add(diceFive);
+        dice.add(diceSix);
+        for (ImageView diceImage : dice) {
+            diceImage.setFitHeight(45);
+            diceImage.setFitWidth(45);
+        }
+        diceImg = new Group(diceOne);
+        timeline = new Timeline();
+        timeline.setCycleCount(2);
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(100),
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceTwo);
+                }
+        ));
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(200),
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceThree);
+                }
+        ));
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(300),
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceFour);
+                }
+        ));
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(400),
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceFive);
+                }
+        ));
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(500),
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceSix);
+                }
+        ));
+
+        timeline.getKeyFrames().add(new KeyFrame(Duration.millis(600),
+                (ActionEvent e) -> {
+                    diceImg.getChildren().setAll(diceOne);
+                }
+        ));
+        diceRoll = new ImageView();
+        diceRoll.setFitWidth(45);
+        diceRoll.setFitHeight(45);
+        rolled = new Label();
+        diceBox.setMinWidth(80);
+        diceBox.getChildren().add(diceImg);
+        diceBox.getChildren().add(diceRoll);
+        diceBox.getChildren().add(rolled);
+
+        //Display current turn and quit button
+        turn = 1;
+        VBox currTurn = new VBox();
+        currentTurn = new Label("Turn: " + (turn / players.size()));
+        currTurn.setAlignment(Pos.CENTER_RIGHT);
+        currTurn.setMinWidth(50);
+        currTurn.setMinHeight(100);
+        quitButton = new Button("Quit");
+        quitButton.setId("quitButton2");
+        quitButton.setOnAction(e -> {
+            Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+            confirmation.setContentText("Are you sure you want to quit the game?");
+            confirmation.setHeaderText("Quit");
+            confirmation.setTitle("Quit");
+            confirmation.showAndWait();
+            if (confirmation.getResult() == ButtonType.OK) {
+                initWelcomeScreen();
+            }
+        });
+        currTurn.getChildren().addAll(currentTurn, quitButton);
+        spriteDisp.setMaxWidth(50);
+        spriteDisp.setMaxHeight(50);
+        toolbar.getChildren().addAll(spriteDisp, playerInfo, otherPlayers, diceBox, currTurn);
     }
 
     public void takeTurn(PlayerModel player) {
@@ -411,16 +450,25 @@ public class Controller extends Application {
             rollDie(player);
         }
 
+        /////////FOR TESTING/DEBUGGING PURPOSES/////////
+//        if (choose.getResult() == ButtonType.CANCEL) {
+//            gameWon = true;
+//            stage.close();
+//        }
+        ///////////////////////////////////////////////
+
         int c = GridPane.getColumnIndex(player.getSprite());
         int r = GridPane.getRowIndex(player.getSprite());
 
         if (r % 2 == 0) {
             chanceTile();
-        } else if (c % 2 == 0) {
-            player.setGold(player.getGold() - 1);
+        } /*else if (c % 2 == 0) {
+            if (player.getGold() != 0) {
+                player.setGold(player.getGold() - 1);
+            }
         } else {
             player.setGold(player.getGold() + 1);
-        }
+        } */
 
     }
 
@@ -447,12 +495,12 @@ public class Controller extends Application {
     private void rollDie(PlayerModel player) {
         timeline.play();
         timeline.setOnFinished((ActionEvent e) -> {
-                    diceRoll.setVisible(true);
-                    diceImg.setVisible(false);
-                    updateToolbar();
-                });
+            diceRoll.setVisible(true);
+            diceImg.setVisible(false);
+            updateToolbar();
+        });
         Random random = new Random();
-        int roll = random.nextInt(6) + 1;
+        roll = random.nextInt(6) + 1;
         if (roll == 1) {
             diceRoll.setImage(new Image("file:resources/images/sprites/one.png"));
         } else if (roll == 2) {
@@ -466,12 +514,30 @@ public class Controller extends Application {
         } else {
             diceRoll.setImage(new Image("file:resources/images/sprites/six.png"));
         }
-        rolled.setText(currPlayer.getName() + " rolled a " + roll);
-        System.out.println("Roll is: " + roll);
+        rolled.setText(currPlayer.getName() + " rolled...");
         for (int i = 1; i <= roll; i++) {
             moveOneSquare(player);
         }
+        updateMoney(player);
+    }
 
+    private void updateMoney(PlayerModel player) {
+        Circle user = player.getSprite();
+        int c = GridPane.getColumnIndex(user);
+        int r = GridPane.getRowIndex(user);
+        String squareColor = squareGrid[r][c];
+
+        if (squareColor == "Red") {
+            if (player.getGold() >= 4) {
+                player.setGold(player.getGold() - 4);
+            } else {
+                player.setGold(0);
+            }
+        }
+        if (squareColor == "Green") {
+            player.setGold(player.getGold() + 6);
+        }
+        currGold.setText("Gold: " + currPlayer.getGold());
     }
 
     private void updateToolbar() {
@@ -489,20 +555,20 @@ public class Controller extends Application {
             }
         }
         toolbar.setBackground(new Background(new BackgroundFill(currPlayer.getCharacter(),
-            CornerRadii.EMPTY, Insets.EMPTY)));
+                CornerRadii.EMPTY, Insets.EMPTY)));
 
     }
 
     private void chanceTile() {
-        System.out.println("You've landed on a Chance Tile!");
+        //System.out.println("You've landed on a Chance Tile!");
     }
 
     private void youWin() {
         stage.setTitle("You Win!");
         String bigText = new String("Congratulations on winning \n "
-            + "Dying for Die, " + currPlayer.getName() + "!");
+                + "Dying for Die, " + currPlayer.getName() + "!");
         String bg = new String("file:resources/"
-            + "images/backgrounds/win_screen.jpg");
+                + "images/backgrounds/win_screen.jpg");
         String playText = new String("Click Here to Play Again");
         Screen winScreen = new Screen(width, height, bigText, bg, playText);
 
@@ -540,5 +606,20 @@ public class Controller extends Application {
 
     public Label getCurrTurn() {
         return currentTurn;
+    }
+    public String[][] getSquareGrid() {
+        return squareGrid;
+    }
+
+    public Label getOther1() {
+        return other1;
+    }
+
+    public ImageView getDiceRoll() {
+        return diceRoll;
+    }
+
+    public int getRoll() {
+        return roll;
     }
 }

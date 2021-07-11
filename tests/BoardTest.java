@@ -1,16 +1,23 @@
 import controller.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.PlayerModel;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.base.WindowMatchers;
 
+import java.sql.Time;
 import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
@@ -105,12 +112,42 @@ public class BoardTest extends ApplicationTest {
 
     @Test // Test that player labels correctly update //Aayush Dixit
     public void testLabelsUpdate() {
-
+        Label old = controller.getOther1();
+        clickOn("Roll");
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(3), null));
+        timeline.setCycleCount(2);
+        timeline.play();
+        timeline.setOnFinished((ActionEvent e) -> {
+            Label curr = controller.getOther1();
+            assertNotEquals(old,curr);
+        });
     }
 
     @Test // Test that dice rolling correctly functions //Aayush Dixit
     public void testDiceRolling() {
-
+        clickOn("Roll");
+        int rolled = controller.getRoll();
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(3), null));
+        timeline.setCycleCount(2);
+        timeline.play();
+        timeline.setOnFinished((ActionEvent e) -> {
+            ImageView dice = controller.getDiceRoll();
+            if (rolled == 1) {
+                assertEquals(dice, new ImageView("file:resources/images/sprites/one.png"));
+            } else if (rolled == 2) {
+                assertEquals(dice, new ImageView("file:resources/images/sprites/two.png"));
+            } else if (rolled == 3) {
+                assertEquals(dice, new ImageView("file:resources/images/sprites/three.png"));
+            } else if (rolled == 4) {
+                assertEquals(dice, new ImageView("file:resources/images/sprites/four.png"));
+            } else if (rolled == 5) {
+                assertEquals(dice, new ImageView("file:resources/images/sprites/five.png"));
+            } else {
+                assertEquals(dice, new ImageView("file:resources/images/sprites/six.png"));
+            }
+        });
     }
 
 }
