@@ -3,26 +3,18 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.PlayerModel;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.matcher.base.WindowMatchers;
-
-import java.sql.Time;
-import java.util.NoSuchElementException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
-import static org.testfx.api.FxAssert.verifyThat;
 
 public class BoardTest extends ApplicationTest {
 
@@ -146,7 +138,7 @@ public class BoardTest extends ApplicationTest {
         timeline.play();
         timeline.setOnFinished((ActionEvent e) -> {
             Label curr = controller.getOther1();
-            assertNotEquals(old,curr);
+            assertNotEquals(old, curr);
         });
     }
 
