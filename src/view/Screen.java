@@ -26,16 +26,20 @@ public class Screen {
     private String bigText;
     private String background;
     private String playText;
+    private String ranks;
 
     private Screen() {
     }
 
     public Screen(int width, int height, String bigText, String background,
-                  String playText) {
+                  String playText, String ranks) {
         this.width = width;
         this.height = height;
         this.bigText = bigText;
         this.background = background;
+        if (ranks != null) {
+            this.ranks = ranks;
+        }
         playButton = new Button(playText);
         playButton.setId("playButton");
         quitButton = new Button("Quit Game");
@@ -46,8 +50,6 @@ public class Screen {
 
         BorderPane pane = new BorderPane();
         Scene scene = new Scene(pane, 500, 350);
-
-
 
         // Change the url here to change the background image.
         Image image = new Image(background);
@@ -81,6 +83,11 @@ public class Screen {
         } else if (bigText.contains("Congratulations")) {
             text.setFill(Color.BLACK);
             pane.setCenter(text);
+            Text rank = new Text(ranks);
+            rank.setStyle("-fx-font: 14 System");
+            rank.setFill(Color.BLACK);
+            pane.setAlignment(rank, Pos.TOP_CENTER);
+            pane.setTop(rank);
             pane.setBottom(buttons);
             pane.setMargin(buttons, new Insets(0, 0, 60, 0));
         } else {

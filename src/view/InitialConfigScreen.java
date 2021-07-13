@@ -154,18 +154,21 @@ public class InitialConfigScreen {
         two.setContentDisplay(ContentDisplay.TOP);
         players.getChildren().add(two);
         two.setToggleGroup(numPlayers);
+        two.getStyleClass().add("button");
 
         three = new ToggleButton("3");
         three.setId("3");
         three.setContentDisplay(ContentDisplay.TOP);
         players.getChildren().add(three);
         three.setToggleGroup(numPlayers);
+        three.getStyleClass().add("button");
 
         four = new ToggleButton("4");
         four.setId("4");
         four.setContentDisplay(ContentDisplay.TOP);
         players.getChildren().add(four);
         four.setToggleGroup(numPlayers);
+        four.getStyleClass().add("button");
 
         options.getChildren().add(players);
 

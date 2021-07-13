@@ -18,7 +18,16 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -90,8 +99,7 @@ public class Controller extends Application {
         String bg = new String("file:resources/"
             + "images/backgrounds/welcome_screen.png");
         String playText = new String("Click Here to Begin");
-        String stats = null;
-        Screen welcomeScreen = new Screen(width, height, bigText, bg, playText);
+        Screen welcomeScreen = new Screen(width, height, bigText, bg, playText, null);
 
         Button quitButton = welcomeScreen.getQuitButton();
         quitButton.setOnAction(e -> stage.close());
@@ -180,37 +188,6 @@ public class Controller extends Application {
         // Create the Pane and all Details
         grid = loader.load(fxmlStream);
 
-        /*Image image0 = new Image("file:resources/images/backgrounds/SquareImage.jpg");
-        BackgroundSize backgroundSize0 = new BackgroundSize(
-            BackgroundSize.AUTO, BackgroundSize.AUTO,
-            true, true, true, true);
-        BackgroundImage backgroundImage0 = new BackgroundImage(image0,
-            BackgroundRepeat.NO_REPEAT,
-            BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-            backgroundSize0);
-        Background background1 = new Background(backgroundImage0);
-        int i = 0;
-        while (i != 5) {
-            Random rand = new Random();
-            int red = rand.nextInt(255);
-            int green = rand.nextInt(255);
-            int blue = rand.nextInt(255);
-            Rectangle rec = new Rectangle();
-            rec.setWidth(75);
-            rec.setHeight(57);
-            rec.setArcWidth(5);
-            rec.setArcHeight(5);
-            rec.setFill(Color.rgb(red, green, blue, .99));
-            int[] intArray = {1, 3, 5};
-            int column = rand.nextInt(7);
-            int row = intArray[rand.nextInt(3)];
-            if (bonusSquares[column][row] == null) {
-                grid.add(rec, rand.nextInt(7), intArray[rand.nextInt(3)]);
-                bonusSquares[column][row] = 1;
-                i++;
-            }
-        }
-        grid.setBackground(background1);*/
         Image image0 = new Image("file:resources/images/backgrounds/DungeonBackground.jpg");
         BackgroundSize backgroundSize0 = new BackgroundSize(
             BackgroundSize.AUTO, BackgroundSize.AUTO,
@@ -289,7 +266,11 @@ public class Controller extends Application {
         stage.show();
         while (!gameWon) {
             for (PlayerModel player : players) {
-                takeTurn(player);
+                if (player.getCursed()) {
+                    player.setCursed(false);
+                } else {
+                    takeTurn(player);
+                }
             }
         }
     }
@@ -431,7 +412,7 @@ public class Controller extends Application {
 
     public void takeTurn(PlayerModel player) {
         currPlayer = player;
-        //updateToolbar();
+        updateToolbar();
         Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
         choose.setX(170);
         choose.setY(400);
@@ -462,13 +443,7 @@ public class Controller extends Application {
 
         if (r % 2 == 0) {
             chanceTile();
-        } /*else if (c % 2 == 0) {
-            if (player.getGold() != 0) {
-                player.setGold(player.getGold() - 1);
-            }
-        } else {
-            player.setGold(player.getGold() + 1);
-        } */
+        }
 
     }
 
@@ -492,6 +467,23 @@ public class Controller extends Application {
         grid.add(user, c, r);
     }
 
+    public void moveBack(PlayerModel player) {
+        Circle user = player.getSprite();
+        int c = GridPane.getColumnIndex(user);
+        int r = GridPane.getRowIndex(user);
+        grid.getChildren().remove(user);
+
+        if ((c == 10 && (r == 3 || r == 7)) || (c == 0 && (r == 5 || r == 9)) || (r % 2 == 0)) {
+            r--;
+        } else if (r == 3 || r == 7) {
+            c++;
+        } else {
+            c--;
+        }
+
+        grid.add(user, c, r);
+    }
+
     private void rollDie(PlayerModel player) {
         timeline.play();
         timeline.setOnFinished((ActionEvent e) -> {
@@ -501,6 +493,7 @@ public class Controller extends Application {
         });
         Random random = new Random();
         roll = random.nextInt(6) + 1;
+        currPlayer.setScore((Integer) (currPlayer.getScore() + roll));
         if (roll == 1) {
             diceRoll.setImage(new Image("file:resources/images/sprites/one.png"));
         } else if (roll == 2) {
@@ -560,7 +553,69 @@ public class Controller extends Application {
     }
 
     private void chanceTile() {
-        //System.out.println("You've landed on a Chance Tile!");
+        Random random = new Random();
+        int event = random.nextInt(6) + 1;
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Chance Event");
+        switch (event) {
+        case 1: //move back
+            alert.setContentText("You fell through the floor!");
+            alert.setHeaderText("Move Back 2-4 Spaces");
+            alert.showAndWait();
+            for (int i = players.size(); i > 0; i--) {
+                moveBack(currPlayer);
+            }
+            currPlayer.setScore(currPlayer.getScore() - players.size());
+            break;
+        case 2: //move forward
+            alert.setContentText("You found a secret passage!");
+            alert.setHeaderText("Move Forward 2-4 Spaces");
+            alert.showAndWait();
+            for (int i = players.size(); i > 0; i--) {
+                moveOneSquare(currPlayer);
+            }
+            currPlayer.setScore(currPlayer.getScore() + players.size());
+            break;
+        case 3: //Go again
+            alert.setContentText("You've been blessed by an old cleric!");
+            alert.setHeaderText("Go Again");
+            alert.showAndWait();
+            takeTurn(currPlayer);
+            break;
+        case 4: //Lose a turn
+            alert.setContentText("You've been cursed by an old witch!");
+            alert.setHeaderText("Lose a Turn");
+            alert.showAndWait();
+            currPlayer.setCursed(true);
+            break;
+        case 5: //take money from all players
+            alert.setHeaderText("Take 1 Gold from Each Player");
+            alert.setContentText("You intimidated a group of travellers!");
+            alert.showAndWait();
+            for (PlayerModel player : players) {
+                if (!player.equals(currPlayer)) {
+                    player.setGold(player.getGold() - 1);
+                    currPlayer.setGold(currPlayer.getGold() + 1);
+                }
+            }
+            break;
+        case 6: //give money to all players
+            alert.setHeaderText("Lose 1 Gold to Each Player");
+            alert.setContentText("You've been robbed by a gang of thieves!");
+            alert.showAndWait();
+            for (PlayerModel player : players) {
+                if (!player.equals(currPlayer)) {
+                    player.setGold(player.getGold() + 1);
+                    currPlayer.setGold(currPlayer.getGold() - 1);
+                }
+            }
+            break;
+        default: //Funny dialog but no effect
+            alert.setHeaderText("Do Nothing.....Nothing At All");
+            alert.setContentText("You've been crippled by the sheer terror "
+                + "hopelessness of this bleak situation.");
+            alert.showAndWait();
+        }
     }
 
     private void youWin() {
@@ -570,7 +625,18 @@ public class Controller extends Application {
         String bg = new String("file:resources/"
             + "images/backgrounds/win_screen.jpg");
         String playText = new String("Click Here to Play Again");
-        Screen winScreen = new Screen(width, height, bigText, bg, playText);
+
+        ArrayList rankings = new ArrayList<String>();
+        Collections.sort(players, (p1, p2) -> p2.getScore().compareTo(p1.getScore()));
+
+        StringBuilder ranks = new StringBuilder();
+        int n = 1;
+        for (PlayerModel player : players) {
+            ranks.append(n).append(". ").append(player.getName()).append("  ");
+            n++;
+        }
+
+        Screen winScreen = new Screen(width, height, bigText, bg, playText, ranks.toString());
 
         Button quitButton = winScreen.getQuitButton();
         quitButton.setOnAction(e -> stage.close());

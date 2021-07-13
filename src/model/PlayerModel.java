@@ -10,6 +10,8 @@ public class PlayerModel {
     private int gold;
     private Circle sprite;
     private Image spriteImg;
+    private Integer score = 0;
+    private boolean cursed = false;
 
     public PlayerModel(String name, Color character, int gold) {
         this.name = name;
@@ -55,6 +57,22 @@ public class PlayerModel {
 
     public Image getSpriteImg() {
         return this.spriteImg;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getScore() {
+        return this.score;
+    }
+
+    public void setCursed(boolean cursed) {
+        this.cursed = cursed;
+    }
+
+    public boolean getCursed() {
+        return this.cursed;
     }
 
 }
