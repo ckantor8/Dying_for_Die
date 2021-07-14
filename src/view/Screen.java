@@ -41,9 +41,9 @@ public class Screen {
             this.ranks = ranks;
         }
         playButton = new Button(playText);
-        playButton.setId("playButton");
+        //playButton.setId("replayButton");
         quitButton = new Button("Quit Game");
-        quitButton.setId("quitButton1");
+        //quitButton.setId("quitButton1");
     }
 
     public Scene getScene() {
@@ -82,8 +82,10 @@ public class Screen {
             pane.setMargin(buttons, new Insets(0, 0, 10, 0));
         } else if (bigText.contains("Congratulations")) {
             text.setFill(Color.BLACK);
+            text.setId("congrats");
             pane.setCenter(text);
             Text rank = new Text(ranks);
+            rank.setId("rank");
             rank.setStyle("-fx-font: 14 System");
             rank.setFill(Color.BLACK);
             pane.setAlignment(rank, Pos.TOP_CENTER);

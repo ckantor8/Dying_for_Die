@@ -80,7 +80,7 @@ public class InitialConfigScreen {
     public Scene getScene(BorderPane configPane, Scene configScene) {
 
         name = new TextField();
-        name.setId("name");
+        name.setId("gameName");
         name.setPrefWidth(215);
         name.setMaxWidth(215);
         Text instr1 = new Text("Title Your Game");

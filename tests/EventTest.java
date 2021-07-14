@@ -3,18 +3,23 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import model.PlayerModel;
 import org.junit.Before;
 import org.junit.Test;
+import org.testfx.api.FxRobotException;
 import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.matcher.base.NodeMatchers;
+import org.testfx.matcher.base.WindowMatchers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+import static org.testfx.api.FxAssert.verifyThat;
 
 public class EventTest extends ApplicationTest {
 
@@ -33,7 +38,7 @@ public class EventTest extends ApplicationTest {
     @Before
     public void getToBoard() {
         clickOn("Click Here to Begin");
-        clickOn("#name").write("Bob's Game");
+        clickOn("#gameName").write("Bob's Game");
         clickOn("#$4");
         clickOn("#2");
         clickOn("Begin Game");
@@ -47,44 +52,56 @@ public class EventTest extends ApplicationTest {
 
     //---------------------------Milestone 4 Tests--------------------------
 
-    @Test //Test that Win Screen is displayed upon completion
-    public void testWinScreen() {
-
+    @Test //Test that Win Screen is displayed upon completion with player ranks
+    public void testWinScreen() { //Cody Kantor
+        controller.setGameWon(true);
+        sleep(2000);
+        verifyThat("#rank", NodeMatchers.isNotNull());
     }
 
-    @Test //Test that the players' placements are correctly displayed
-    public void testWinStats() {
-
+    @Test //Test that the player(s) can play again after completing a game
+    public void testWinPlay() { //Cody Kantor
+        controller.setGameWon(true);
+        clickOn("Click Here to Play Again");
+        verifyThat(window("Your New Favorite Board Game"),
+            WindowMatchers.isShowing());
     }
 
-    @Test //Test Chance Event 1
+    @Test //Test that the player(s) can quit the game after completion
+    public void testWinQuit() { //Cody Kantor
+        controller.setGameWon(true);
+        clickOn("Quit Game");
+        assertEquals(Window.getWindows().toString(), "[]");
+    }
+
+    /*@Test //Test Chance Event 1 -- Alistair Sequeira
     public void testChance1() {
 
     }
 
-    @Test //Test Chance Event 2
+    @Test //Test Chance Event 2 -- Alistair Sequiera
     public void testChance2() {
 
     }
 
-    @Test //Test Chance Event 3
+    @Test //Test Chance Event 3 -- Aayush Dixit
     public void testChance3() {
 
     }
 
-    @Test //Test Chance Event 4
+    @Test //Test Chance Event 4 -- Aayush Dixit
     public void testChance4() {
 
     }
 
-    @Test //Test Chance Event 5
+    @Test //Test Chance Event 5 -- Thomas Crawford
     public void testChance5() {
 
     }
 
-    @Test //Test Chance Event 6
+    @Test //Test Chance Event 6 -- Thomas Crawford
     public void testChance6() {
 
-    }
+    }*/
 
 }

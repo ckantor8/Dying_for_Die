@@ -94,7 +94,7 @@ public class Controller extends Application {
     private void initWelcomeScreen() {
         gameWon = false;
         players = new ArrayList<>();
-        stage.setTitle("Your New Favorite Dungeon Crawler");
+        stage.setTitle("Your New Favorite Board Game");
         String bigText = new String("Welcome to \n Dying for Die");
         String bg = new String("file:resources/"
             + "images/backgrounds/welcome_screen.png");
@@ -273,6 +273,7 @@ public class Controller extends Application {
                 }
             }
         }
+        youWin();
     }
 
     public void setupToolbar() {
@@ -618,8 +619,9 @@ public class Controller extends Application {
         }
     }
 
-    private void youWin() {
+    public void youWin() {
         stage.setTitle("You Win!");
+        stage.show();
         String bigText = new String("Congratulations on winning \n "
             + "Dying for Die, " + currPlayer.getName() + "!");
         String bg = new String("file:resources/"
@@ -639,10 +641,11 @@ public class Controller extends Application {
         Screen winScreen = new Screen(width, height, bigText, bg, playText, ranks.toString());
 
         Button quitButton = winScreen.getQuitButton();
+        quitButton.setId("quitButton1");
         quitButton.setOnAction(e -> stage.close());
 
         Button replayButton = winScreen.getPlayButton();
-        replayButton.setId("replaybutton");
+        replayButton.setId("replayButton");
         replayButton.setOnAction(e -> initWelcomeScreen());
 
         Scene winScene = winScreen.getScene();
@@ -688,5 +691,13 @@ public class Controller extends Application {
 
     public int getRoll() {
         return roll;
+    }
+
+    public void setGameWon(Boolean gameWon) {
+        this.gameWon = gameWon;
+    }
+
+    public Boolean getGameWon() {
+        return this.gameWon;
     }
 }
