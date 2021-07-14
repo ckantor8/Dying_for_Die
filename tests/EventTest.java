@@ -54,27 +54,47 @@ public class EventTest extends ApplicationTest {
 
     @Test //Test that Win Screen is displayed upon completion with player ranks
     public void testWinScreen() { //Cody Kantor
-        controller.setGameWon(true);
-        sleep(2000);
+        while (!controller.getGameWon()) {
+            try {
+                clickOn("Roll");
+            } catch (FxRobotException e) {
+                clickOn("OK");
+            }
+        }
+        verifyThat("#congrats", NodeMatchers.isNotNull());
         verifyThat("#rank", NodeMatchers.isNotNull());
     }
 
     @Test //Test that the player(s) can play again after completing a game
     public void testWinPlay() { //Cody Kantor
-        controller.setGameWon(true);
-        clickOn("Click Here to Play Again");
+        while (!controller.getGameWon()) {
+            try {
+                clickOn("Roll");
+            } catch (FxRobotException e) {
+                clickOn("OK");
+            }
+        }
+        Button button = find("#replayButton");
+        clickOn(button);
         verifyThat(window("Your New Favorite Board Game"),
             WindowMatchers.isShowing());
     }
 
     @Test //Test that the player(s) can quit the game after completion
     public void testWinQuit() { //Cody Kantor
-        controller.setGameWon(true);
-        clickOn("Quit Game");
+        while (!controller.getGameWon()) {
+            try {
+                clickOn("Roll");
+            } catch (FxRobotException e) {
+                clickOn("OK");
+            }
+        }
+        Button button = find("#quitButton1");
+        clickOn(button);
         assertEquals(Window.getWindows().toString(), "[]");
     }
 
-    /*@Test //Test Chance Event 1 -- Alistair Sequeira
+    @Test //Test Chance Event 1 -- Alistair Sequeira
     public void testChance1() {
 
     }
@@ -102,6 +122,6 @@ public class EventTest extends ApplicationTest {
     @Test //Test Chance Event 6 -- Thomas Crawford
     public void testChance6() {
 
-    }*/
+    }
 
 }

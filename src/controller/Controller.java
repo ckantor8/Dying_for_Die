@@ -47,7 +47,7 @@ import java.util.Random;
 public class Controller extends Application {
     @FXML
     private GridPane grid;
-    private String[][] squareGrid = new String[10][11];
+    private final String[][] squareGrid = new String[10][11];
     private Stage stage;
     private final int width = 500;
     private final int height = 500;
@@ -65,6 +65,7 @@ public class Controller extends Application {
     private ImageView currSpriteImg;
     private Button quitButton;
     private Boolean gameWon = false;
+    private Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
     private VBox diceBox;
     private Group diceImg;
     private Timeline timeline;
@@ -83,6 +84,7 @@ public class Controller extends Application {
     private Label other3 = new Label();
     private Label[] others = {other1, other2, other3};
     private ArrayList<ImageView> dice = new ArrayList<>();
+    private Screen screen = new Screen();
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -265,15 +267,14 @@ public class Controller extends Application {
         // Display the Stage
         stage.show();
         while (!gameWon) {
-            for (PlayerModel player : players) {
-                if (player.getCursed()) {
-                    player.setCursed(false);
+            for (int i = 0; i < players.size(); i++) {
+                if (players.get(i).getCursed()) {
+                    players.get(i).setCursed(false);
                 } else {
-                    takeTurn(player);
+                    takeTurn(players.get(i));
                 }
             }
         }
-        youWin();
     }
 
     public void setupToolbar() {
@@ -414,7 +415,7 @@ public class Controller extends Application {
     public void takeTurn(PlayerModel player) {
         currPlayer = player;
         updateToolbar();
-        Alert choose = new Alert(Alert.AlertType.CONFIRMATION);
+        choose = new Alert(Alert.AlertType.CONFIRMATION);
         choose.setX(170);
         choose.setY(400);
         choose.setContentText("Make a move!");
@@ -538,7 +539,9 @@ public class Controller extends Application {
         turn++;
         p1.setText("Player: " + currPlayer.getName());
         currGold.setText("Gold: " + currPlayer.getGold());
-        currentTurn.setText("Turn: " + (turn / players.size()));
+        if (!players.isEmpty()) {
+            currentTurn.setText("Turn: " + (turn / players.size()));
+        }
         currSpriteImg.setImage(currPlayer.getSpriteImg());
         int j = 0;
         for (PlayerModel player : players) {
@@ -587,6 +590,7 @@ public class Controller extends Application {
             alert.setContentText("You've been cursed by an old witch!");
             alert.setHeaderText("Lose a Turn");
             alert.showAndWait();
+            //curse = currPlayer;
             currPlayer.setCursed(true);
             break;
         case 5: //take money from all players
@@ -620,6 +624,7 @@ public class Controller extends Application {
     }
 
     public void youWin() {
+        choose.close();
         stage.setTitle("You Win!");
         stage.show();
         String bigText = new String("Congratulations on winning \n "
@@ -639,6 +644,7 @@ public class Controller extends Application {
         }
 
         Screen winScreen = new Screen(width, height, bigText, bg, playText, ranks.toString());
+        screen = winScreen;
 
         Button quitButton = winScreen.getQuitButton();
         quitButton.setId("quitButton1");
@@ -648,6 +654,7 @@ public class Controller extends Application {
         replayButton.setId("replayButton");
         replayButton.setOnAction(e -> initWelcomeScreen());
 
+        players.clear();
         Scene winScene = winScreen.getScene();
         stage.setScene(winScene);
         stage.show();
@@ -659,6 +666,14 @@ public class Controller extends Application {
 
     public Label getP1() {
         return p1;
+    }
+
+    public Screen getScreen() {
+        return this.screen;
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
 
     public PlayerModel getCurrPlayer() {
@@ -699,5 +714,9 @@ public class Controller extends Application {
 
     public Boolean getGameWon() {
         return this.gameWon;
+    }
+
+    public Alert getChoose() {
+        return this.choose;
     }
 }

@@ -28,7 +28,7 @@ public class Screen {
     private String playText;
     private String ranks;
 
-    private Screen() {
+    public Screen() {
     }
 
     public Screen(int width, int height, String bigText, String background,
@@ -41,9 +41,7 @@ public class Screen {
             this.ranks = ranks;
         }
         playButton = new Button(playText);
-        //playButton.setId("replayButton");
         quitButton = new Button("Quit Game");
-        //quitButton.setId("quitButton1");
     }
 
     public Scene getScene() {
