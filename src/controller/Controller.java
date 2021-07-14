@@ -564,18 +564,18 @@ public class Controller extends Application {
         switch (event) {
         case 1: //move back
             alert.setContentText("You fell through the floor!");
-            alert.setHeaderText("Move Back 2-4 Spaces");
+            alert.setHeaderText("Move Back 1-3 Spaces");
             alert.showAndWait();
-            for (int i = players.size(); i > 0; i--) {
+            for (int i = players.size(); i > 1; i--) {
                 moveBack(currPlayer);
             }
             currPlayer.setScore(currPlayer.getScore() - players.size());
             break;
         case 2: //move forward
             alert.setContentText("You found a secret passage!");
-            alert.setHeaderText("Move Forward 2-4 Spaces");
+            alert.setHeaderText("Move Forward 1-3 Spaces");
             alert.showAndWait();
-            for (int i = players.size(); i > 0; i--) {
+            for (int i = players.size(); i > 1; i--) {
                 moveOneSquare(currPlayer);
             }
             currPlayer.setScore(currPlayer.getScore() + players.size());
