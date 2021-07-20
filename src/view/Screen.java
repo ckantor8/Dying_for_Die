@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -27,15 +28,29 @@ public class Screen {
     private String background;
     private String playText;
     private String ranks;
+    private Image sprite;
 
     public Screen() {
     }
-
     public Screen(int width, int height, String bigText, String background,
                   String playText, String ranks) {
         this.width = width;
         this.height = height;
         this.bigText = bigText;
+        this.background = background;
+        if (ranks != null) {
+            this.ranks = ranks;
+        }
+        playButton = new Button(playText);
+        quitButton = new Button("Quit Game");
+    }
+
+    public Screen(int width, int height, String bigText, Image sprite, String background,
+                  String playText, String ranks) {
+        this.width = width;
+        this.height = height;
+        this.bigText = bigText;
+        this.sprite = sprite;
         this.background = background;
         if (ranks != null) {
             this.ranks = ranks;
@@ -79,9 +94,14 @@ public class Screen {
             pane.setBottom(buttons);
             pane.setMargin(buttons, new Insets(0, 0, 10, 0));
         } else if (bigText.contains("Congratulations")) {
+            VBox winInfo = new VBox();
+            winInfo.getChildren().add(text);
+            winInfo.getChildren().add(new ImageView(sprite));
+            winInfo.setSpacing(15);
+            winInfo.setAlignment(Pos.CENTER);
             text.setFill(Color.BLACK);
             text.setId("congrats");
-            pane.setCenter(text);
+            pane.setCenter(winInfo);
             Text rank = new Text(ranks);
             rank.setId("rank");
             rank.setStyle("-fx-font: 14 System");

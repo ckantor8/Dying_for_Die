@@ -34,9 +34,9 @@
     </rowConstraints>
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="75.0" stroke="BLACK" strokeType="INSIDE" width="72.0" GridPane.rowIndex="8" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff5ff" height="75.0" stroke="BLACK" strokeType="INSIDE" width="72.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="72.0" stroke="BLACK" strokeType="INSIDE" width="73.0" GridPane.columnIndex="10" GridPane.rowIndex="2" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="72.0" stroke="BLACK" strokeType="INSIDE" width="71.0" GridPane.rowIndex="4" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="72.0" stroke="BLACK" strokeType="INSIDE" width="74.0" GridPane.columnIndex="10" GridPane.rowIndex="6" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fff5ff" height="75.0" stroke="BLACK" strokeType="INSIDE" width="72.0" GridPane.columnIndex="0" GridPane.rowIndex="1" />
     </children>
 </GridPane>

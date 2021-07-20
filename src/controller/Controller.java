@@ -29,6 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -201,6 +202,18 @@ public class Controller extends Application {
         Background background1 = new Background(backgroundImage0);
         grid.setBackground(background1);
 
+        Image chance = new Image("file:resources/images/backgrounds/Chance.jpg");
+
+        // Setup chance tiles
+        for (int i = 0; i <= 3; i++) {
+            Rectangle rec = (Rectangle)grid.getChildren().get(i);
+            rec.setFill(new ImagePattern(chance));
+        }
+
+
+
+
+        // Setup green and red tiles
         for (int i = 1; i <= 9; i = i + 2) {
             for (int j = 0; j <= 10; j++) {
                 if ((i == 1) && j == 0) {
@@ -643,7 +656,7 @@ public class Controller extends Application {
             n++;
         }
 
-        Screen winScreen = new Screen(width, height, bigText, bg, playText, ranks.toString());
+        Screen winScreen = new Screen(width, height, bigText, currPlayer.getSpriteImg(), bg, playText, ranks.toString());
         screen = winScreen;
 
         Button quitButton = winScreen.getQuitButton();
