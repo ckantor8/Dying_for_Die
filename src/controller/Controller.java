@@ -86,6 +86,8 @@ public class Controller extends Application {
     private Label[] others = {other1, other2, other3};
     private ArrayList<ImageView> dice = new ArrayList<>();
     private Screen screen = new Screen();
+    private Boolean chanceSet = false;
+    private int chance = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -206,7 +208,7 @@ public class Controller extends Application {
 
         // Setup chance tiles
         for (int i = 0; i <= 3; i++) {
-            Rectangle rec = (Rectangle)grid.getChildren().get(i);
+            Rectangle rec = (Rectangle) grid.getChildren().get(i);
             rec.setFill(new ImagePattern(chance));
         }
 
@@ -570,8 +572,13 @@ public class Controller extends Application {
     }
 
     private void chanceTile() {
-        Random random = new Random();
-        int event = random.nextInt(6) + 1;
+        int event = 0;
+        if (!chanceSet) {
+            Random random = new Random();
+            event = random.nextInt(6) + 1;
+        } else {
+            event = chance;
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Chance Event");
         switch (event) {
@@ -656,7 +663,8 @@ public class Controller extends Application {
             n++;
         }
 
-        Screen winScreen = new Screen(width, height, bigText, currPlayer.getSpriteImg(), bg, playText, ranks.toString());
+        Screen winScreen = new Screen(width, height, bigText,
+            currPlayer.getSpriteImg(), bg, playText, ranks.toString());
         screen = winScreen;
 
         Button quitButton = winScreen.getQuitButton();
@@ -732,4 +740,10 @@ public class Controller extends Application {
     public Alert getChoose() {
         return this.choose;
     }
+
+    public void setChance(int chance) {
+        this.chance = chance;
+        this.chanceSet = true;
+    }
+
 }

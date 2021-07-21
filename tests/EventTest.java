@@ -96,32 +96,32 @@ public class EventTest extends ApplicationTest {
 
     @Test //Test Chance Event 1 -- Alistair Sequeira
     public void testChance1() {
-
+        controller.setChance(1);
     }
 
     @Test //Test Chance Event 2 -- Alistair Sequiera
     public void testChance2() {
-
+        controller.setChance(2);
     }
 
     @Test //Test Chance Event 3 -- Aayush Dixit
     public void testChance3() {
-
+        controller.setChance(3);
     }
 
     @Test //Test Chance Event 4 -- Aayush Dixit
     public void testChance4() {
-
+        controller.setChance(4);
     }
 
     @Test //Test Chance Event 5 -- Thomas Crawford
     public void testChance5() {
-
+        controller.setChance(5);
     }
 
     @Test //Test Chance Event 6 -- Thomas Crawford
     public void testChance6() {
-
+        controller.setChance(6);
     }
 
 }
