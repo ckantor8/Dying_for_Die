@@ -88,6 +88,7 @@ public class Controller extends Application {
     private Screen screen = new Screen();
     private Boolean chanceSet = false;
     private int chance = 0;
+    private Alert alert;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -525,8 +526,15 @@ public class Controller extends Application {
             diceRoll.setImage(new Image("file:resources/images/sprites/six.png"));
         }
         rolled.setText(currPlayer.getName() + " rolled...");
-        for (int i = 1; i <= roll; i++) {
-            moveOneSquare(player);
+
+        if (!chanceSet) {
+            for (int i = 1; i <= roll; i++) {
+                moveOneSquare(player);
+            }
+        } else {
+            for (int i = 1; i <= 11; i++) {
+                moveOneSquare(player);
+            }
         }
         updateMoney(player);
     }
@@ -579,7 +587,7 @@ public class Controller extends Application {
         } else {
             event = chance;
         }
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Chance Event");
         switch (event) {
         case 1: //move back
@@ -744,6 +752,10 @@ public class Controller extends Application {
     public void setChance(int chance) {
         this.chance = chance;
         this.chanceSet = true;
+    }
+
+    public Alert getAlert() {
+        return this.alert;
     }
 
 }
