@@ -100,7 +100,7 @@ public class EventTest extends ApplicationTest {
         clickOn("Roll");
         System.out.println(controller.getAlert().getHeaderText());
     }
-git 
+
     @Test //Test Chance Event 2 -- Alistair Sequiera
     public void testChance2() {
         controller.setChance(2);
