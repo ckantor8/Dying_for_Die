@@ -97,13 +97,21 @@ public class EventTest extends ApplicationTest {
     @Test //Test Chance Event 1 -- Alistair Sequeira
     public void testChance1() {
         controller.setChance(1);
+        PlayerModel player = controller.getCurrPlayer();
         clickOn("Roll");
-        System.out.println(controller.getAlert().getHeaderText());
+        int expectedPos = 1;
+        clickOn("OK");
+        assertEquals((long) expectedPos , (long) GridPane.getRowIndex(player.getSprite()));
     }
 
-    @Test //Test Chance Event 2 -- Alistair Sequiera
+    @Test //Test Chance Event 2 -- Alistair Sequeira
     public void testChance2() {
         controller.setChance(2);
+        PlayerModel player = controller.getCurrPlayer();
+        clickOn("Roll");
+        int expectedPos = 3;
+        clickOn("OK");
+        assertEquals((long) expectedPos, (long) GridPane.getRowIndex(player.getSprite()));
     }
 
     @Test //Test Chance Event 3 -- Aayush Dixit
