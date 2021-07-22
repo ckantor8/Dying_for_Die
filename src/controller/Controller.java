@@ -758,8 +758,4 @@ public class Controller extends Application {
     public Alert getAlert() {
         return this.alert;
     }
-
-    public ArrayList<PlayerModel> getPlayerList() {
-        return players;
-    }
 }
