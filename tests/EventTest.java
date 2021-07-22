@@ -1,5 +1,6 @@
 import controller.Controller;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -127,12 +128,19 @@ public class EventTest extends ApplicationTest {
 
     @Test //Test Chance Event 3 -- Aayush Dixit
     public void testChance3() {
+        PlayerModel player = controller.getCurrPlayer();
         controller.setChance(3);
+        clickOn("Roll");
+        assertEquals(controller.getCurrPlayer(), player);
     }
 
     @Test //Test Chance Event 4 -- Aayush Dixit
     public void testChance4() {
+        clickOn("Roll");
+        PlayerModel player = controller.getCurrPlayer();
         controller.setChance(4);
+        clickOn("Roll");
+        assertEquals(player, controller.getCurrPlayer());
     }
 
     @Test //Test Chance Event 5 -- Thomas Crawford
