@@ -13,6 +13,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -88,7 +89,7 @@ public class Controller extends Application {
     private Screen screen = new Screen();
     private Boolean chanceSet = false;
     private int chance = 0;
-    private Alert alert;
+    private Alert alert = new Alert(AlertType.CONFIRMATION);
 
     @Override
     public void start(Stage primaryStage) throws Exception {

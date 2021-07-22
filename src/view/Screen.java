@@ -96,7 +96,10 @@ public class Screen {
         } else if (bigText.contains("Congratulations")) {
             VBox winInfo = new VBox();
             winInfo.getChildren().add(text);
-            winInfo.getChildren().add(new ImageView(sprite));
+            ImageView img = new ImageView(sprite);
+            img.setFitWidth(50);
+            img.setFitHeight(50);
+            winInfo.getChildren().add(img);
             winInfo.setSpacing(15);
             winInfo.setAlignment(Pos.CENTER);
             text.setFill(Color.BLACK);

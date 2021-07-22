@@ -1,15 +1,8 @@
 import controller.Controller;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
-import javafx.util.Duration;
 import model.PlayerModel;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +10,8 @@ import org.testfx.api.FxRobotException;
 import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.matcher.base.WindowMatchers;
+
+import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 import static org.testfx.api.FxAssert.verifyThat;
@@ -55,9 +50,13 @@ public class EventTest extends ApplicationTest {
     @Test //Test that Win Screen is displayed upon completion with player ranks
     public void testWinScreen() { //Cody Kantor
         while (!controller.getGameWon()) {
-            try {
-                clickOn("Roll");
-            } catch (FxRobotException e) {
+            if (!controller.getAlert().isShowing()) {
+                try {
+                    clickOn("Roll");
+                } catch (FxRobotException e) {
+                    clickOn("OK");
+                }
+            } else {
                 clickOn("OK");
             }
         }
@@ -68,9 +67,13 @@ public class EventTest extends ApplicationTest {
     @Test //Test that the player(s) can play again after completing a game
     public void testWinPlay() { //Cody Kantor
         while (!controller.getGameWon()) {
-            try {
-                clickOn("Roll");
-            } catch (FxRobotException e) {
+            if (!controller.getAlert().isShowing()) {
+                try {
+                    clickOn("Roll");
+                } catch (FxRobotException e) {
+                    clickOn("OK");
+                }
+            } else {
                 clickOn("OK");
             }
         }
@@ -83,15 +86,23 @@ public class EventTest extends ApplicationTest {
     @Test //Test that the player(s) can quit the game after completion
     public void testWinQuit() { //Cody Kantor
         while (!controller.getGameWon()) {
-            try {
-                clickOn("Roll");
-            } catch (FxRobotException e) {
+            if (!controller.getAlert().isShowing()) {
+                try {
+                    clickOn("Roll");
+                } catch (FxRobotException e) {
+                    clickOn("OK");
+                }
+            } else {
                 clickOn("OK");
             }
         }
         Button button = find("#quitButton1");
         clickOn(button);
-        assertEquals(Window.getWindows().toString(), "[]");
+        try {
+            verifyThat(window("You Win!"), WindowMatchers.isNotShowing());
+        } catch (NoSuchElementException e) {
+            assertEquals(1, 1);
+        }
     }
 
     @Test //Test Chance Event 1 -- Alistair Sequeira
@@ -101,7 +112,7 @@ public class EventTest extends ApplicationTest {
         clickOn("Roll");
         int expectedPos = 1;
         clickOn("OK");
-        assertEquals((long) expectedPos , (long) GridPane.getRowIndex(player.getSprite()));
+        assertEquals((long) expectedPos, (long) GridPane.getRowIndex(player.getSprite()));
     }
 
     @Test //Test Chance Event 2 -- Alistair Sequeira
