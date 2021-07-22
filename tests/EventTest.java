@@ -144,12 +144,20 @@ public class EventTest extends ApplicationTest {
 
     @Test //Test Chance Event 5 -- Thomas Crawford
     public void testChance5() {
+        clickOn("Roll");
+        PlayerModel player = controller.getCurrPlayer();
         controller.setChance(5);
+        clickOn("Roll");
+        assertEquals(player, controller.getCurrPlayer());
     }
 
     @Test //Test Chance Event 6 -- Thomas Crawford
     public void testChance6() {
+        clickOn("Roll");
+        PlayerModel player = controller.getCurrPlayer();
         controller.setChance(6);
+        clickOn("Roll");
+        assertEquals(player, controller.getCurrPlayer());
     }
 
 }
