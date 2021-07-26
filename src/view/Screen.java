@@ -97,10 +97,10 @@ public class Screen {
             VBox winInfo = new VBox();
             winInfo.getChildren().add(text);
             ImageView img = new ImageView(sprite);
-            img.setFitWidth(50);
-            img.setFitHeight(50);
+            img.setFitWidth(40);
+            img.setFitHeight(40);
             winInfo.getChildren().add(img);
-            winInfo.setSpacing(15);
+            //winInfo.setSpacing(15);
             winInfo.setAlignment(Pos.CENTER);
             text.setFill(Color.BLACK);
             text.setId("congrats");
