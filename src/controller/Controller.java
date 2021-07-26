@@ -451,11 +451,11 @@ public class Controller extends Application {
         }
 
         /////////FOR TESTING/DEBUGGING PURPOSES/////////
-        if (choose.getResult() == ButtonType.CANCEL) {
-            gameWon = true;
-            youWin();
+        //if (choose.getResult() == ButtonType.CANCEL) {
+            //gameWon = true;
+            //youWin();
             //stage.close();
-        }
+        //}
         ///////////////////////////////////////////////
 
         int c = GridPane.getColumnIndex(player.getSprite());
